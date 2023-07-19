@@ -29,7 +29,6 @@ public class WebSecurityConfig {
                         (authorize) -> authorize
                                 .requestMatchers("/jwt/**").permitAll()
                                 .requestMatchers("/admin**").hasAuthority("ADMIN")
-                                .requestMatchers("/user**").hasAuthority("USER")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
