@@ -26,6 +26,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
+    public Long extractExpirationTime(String token) {
+        return extractClaim(token, Claims::getExpiration).getTime();
+    }
+
+    @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
