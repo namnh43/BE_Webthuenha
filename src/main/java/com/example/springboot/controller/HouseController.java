@@ -19,14 +19,15 @@ public class HouseController {
     @Autowired
     public UserService userService;
 
-    //    @GetMapping("find/{id}")
-//    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
-//        Optional<House> optionalHouse = userService.findById(id);
-//        if (!optionalHouse.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<House>> DetailHouse(@PathVariable Long id){
+//        Optional<House> house = houseService.findById(id);
+//        if (house != null) {
+//            return new ResponseEntity<>(house, HttpStatus.OK);
 //        }
-//        return new ResponseEntity<>(houseService.findByUser(optionalHouse.get()),HttpStatus.OK);
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //    }
+
     @GetMapping("")
     public ResponseEntity<Iterable<House>> listHouse() {
         return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
