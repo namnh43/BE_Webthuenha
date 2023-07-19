@@ -1,0 +1,13 @@
+package com.example.springboot.controller.user;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/host")
+@RequiredArgsConstructor
+@CrossOrigin("*")
+public class HostController {
+}

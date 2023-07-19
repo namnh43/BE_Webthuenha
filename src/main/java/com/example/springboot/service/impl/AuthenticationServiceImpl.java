@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
         var jwt = jwtService.generateToken(user);
 
         var response = new JwtAuthenticationResponse();
