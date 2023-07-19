@@ -1,4 +1,4 @@
-package com.example.springboot.controller;
+package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
 import com.example.springboot.service.house.IHouseService;
