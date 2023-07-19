@@ -26,13 +26,11 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
     private String username;
     private String password;
     private String firstName;
     private String lastName;
-    @NotNull
-    @Email
     private String email;
     private String phoneNumber;
     private Long addressId;
