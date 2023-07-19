@@ -1,6 +1,8 @@
 package com.example.springboot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,15 +19,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users" ,uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+    @NotNull
+    @Email
     private String email;
     private String phoneNumber;
     private Long addressId;
