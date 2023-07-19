@@ -3,6 +3,7 @@ package com.example.springboot.service.house;
 import com.example.springboot.model.House;
 import com.example.springboot.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,4 +31,9 @@ public class HouseService implements IHouseService{
     public void remove(Long id) {
         houseRepository.deleteById(id);
     }
+
+//    @Override
+//    public Iterable<House> findByUser(User user) {
+//        return houseRepository.findByUser(user);
+//    }
 }

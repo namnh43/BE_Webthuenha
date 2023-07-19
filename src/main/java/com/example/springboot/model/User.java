@@ -25,11 +25,8 @@ public class User implements UserDetails {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
-    @Size(min = 6, max = 32, message = "Password length must be between 6 and 34 characters")
     private String password;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
     @Column(unique = true, nullable = false)
     private String email;
