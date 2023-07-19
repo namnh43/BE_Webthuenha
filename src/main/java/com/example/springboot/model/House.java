@@ -23,7 +23,8 @@ public class House {
     private int address_id;
     private int price;
     @ManyToOne
-    private User user_id;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     private Date create_at;
     private String status;
 }

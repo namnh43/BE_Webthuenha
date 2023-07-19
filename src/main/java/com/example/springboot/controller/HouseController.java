@@ -1,8 +1,9 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.model.House;
-import com.example.springboot.service.house.IHouseService;
+import com.example.springboot.model.User;
 import com.example.springboot.service.UserService;
+import com.example.springboot.service.house.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class HouseController {
     @Autowired
     public UserService userService;
 
-    //    @GetMapping("find/{id}")
-//    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
-//        Optional<House> optionalHouse = userService.findById(id);
-//        if (!optionalHouse.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(houseService.findByUser(optionalHouse.get()),HttpStatus.OK);
-//    }
+    @GetMapping("find/{id}")
+    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
+        Optional<User> optionalUser = userService.findById(id);
+        if (!optionalUser.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(houseService.findByUser(optionalUser.get()),HttpStatus.OK);
+    }
     @GetMapping("")
     public ResponseEntity<Iterable<House>> listHouse() {
         return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
