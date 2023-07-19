@@ -1,7 +1,6 @@
-package com.example.springboot.service.impl;
+package com.example.springboot.service.user;
 
 import com.example.springboot.repository.UserRepository;
-import com.example.springboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

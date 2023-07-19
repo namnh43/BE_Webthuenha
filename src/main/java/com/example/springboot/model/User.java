@@ -1,8 +1,7 @@
 package com.example.springboot.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +18,22 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users" ,uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String username;
+    @Size(min = 6, max = 32, message = "Password length must be between 6 and 34 characters")
     private String password;
-    private String firstName;
-    private String lastName;
     @NotNull
-    @Email
+    private String firstName;
+    @NotNull
+    private String lastName;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Pattern(regexp = "^(0)\\d{9}$", message = "Phone number must start with 0 and have 10 digits in total")
     private String phoneNumber;
     private Long addressId;
     private String profileImage;

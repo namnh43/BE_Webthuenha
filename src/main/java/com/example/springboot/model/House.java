@@ -22,7 +22,8 @@ public class House {
     private int total_bathrooms;
     private int address_id;
     private int price;
-    private int owner_id;
+    @ManyToOne
+    private User user_id;
     private Date create_at;
     private String status;
 }
