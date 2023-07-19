@@ -1,7 +1,7 @@
 package com.example.springboot.configuration;
 
 import com.example.springboot.service.JwtService;
-import com.example.springboot.service.user.UserService;
+import com.example.springboot.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

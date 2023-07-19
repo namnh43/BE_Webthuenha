@@ -1,6 +1,6 @@
 package com.example.springboot.configuration;
 
-import com.example.springboot.service.user.UserService;
+import com.example.springboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -23,12 +23,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true, nullable = false)
+
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+
     @Column(unique = true, nullable = false)
+
     private String email;
     @Pattern(regexp = "^(0)\\d{9}$", message = "Phone number must start with 0 and have 10 digits in total")
     private String phoneNumber;
