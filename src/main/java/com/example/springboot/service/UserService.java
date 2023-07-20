@@ -9,4 +9,8 @@ import java.util.List;
 public interface UserService extends IGeneralService<User>{
     UserDetailsService userDetailsService();
     List<User> getAllHosts();
+
+    User acceptHost(Long id);
+
+    User rejectHost(Long id);
 }

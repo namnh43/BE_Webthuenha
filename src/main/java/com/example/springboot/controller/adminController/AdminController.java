@@ -4,10 +4,7 @@ import com.example.springboot.model.User;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
@@ -16,7 +13,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping("/list-user")
     public ResponseEntity<Iterable<User>> showAllListUser(){
         return ResponseEntity.ok(userService.findAll());
     }
@@ -24,4 +21,21 @@ public class AdminController {
     public ResponseEntity<Iterable<User>> showListHost(){
         return ResponseEntity.ok(userService.getAllHosts());
     }
+
+    @PostMapping("/accept-host/{id}")
+    public ResponseEntity<User> acceptHost(@PathVariable Long id){
+        if (userService.acceptHost(id) != null) {
+            return ResponseEntity.ok(userService.acceptHost(id));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/reject-host/{id}")
+    public ResponseEntity<User> rejectHost(@PathVariable Long id){
+        if (userService.rejectHost(id) != null) {
+            return ResponseEntity.ok(userService.rejectHost(id));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
