@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,4 +29,6 @@ public class House {
     private User user;
     private Date create_at;
     private String status;
+    @OneToMany(mappedBy = "house")
+    private List<Image> images;
 }

@@ -1,10 +1,13 @@
-package com.example.springboot.controller;
+package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
 import com.example.springboot.model.User;
 import com.example.springboot.service.UserService;
 import com.example.springboot.service.house.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +32,9 @@ public class HouseController {
         return new ResponseEntity<>(houseService.findByUser(optionalUser.get()),HttpStatus.OK);
     }
     @GetMapping("")
-    public ResponseEntity<Iterable<House>> listHouse() {
-        return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Page<House>> listHouse( @RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(houseService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
