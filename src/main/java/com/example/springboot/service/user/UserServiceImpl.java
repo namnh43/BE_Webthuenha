@@ -34,11 +34,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateRoleToHost(String username) {
-        return null;
-    }
-
-    @Override
     public User acceptHost(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {

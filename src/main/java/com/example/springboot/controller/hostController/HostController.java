@@ -21,14 +21,5 @@ public class HostController {
     public ResponseEntity<Iterable<User>> showListHost(){
         return ResponseEntity.ok(userService.getAllHosts());
     }
-    @PutMapping("/{username}")
-    public ResponseEntity<?> updateRoleToHost(@PathVariable String username, @RequestParam User user) {
-        try {
-            User host = userService.updateRoleToHost(username);
-            host = userService.save(user);
-            return ResponseEntity.ok().build();
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 }
