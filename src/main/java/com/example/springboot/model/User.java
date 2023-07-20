@@ -39,7 +39,6 @@ public class User implements UserDetails {
     private String profileImage;
     private Date createAt;
     private boolean applyHost=false;
-    private boolean isActive =true;
 
     @Enumerated(EnumType.STRING)
     private Role role;
