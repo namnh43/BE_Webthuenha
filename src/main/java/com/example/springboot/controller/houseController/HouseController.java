@@ -69,5 +69,9 @@ public class HouseController {
         return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
     }
 
+    @GetMapping("user/{userId}")
+    public List<House> getHousesWithImagesByUserId(@PathVariable Long userId) {
+        return houseService.getHousesWithImagesByUserId(userId);
+    }
 
 }

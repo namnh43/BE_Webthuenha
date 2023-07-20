@@ -50,4 +50,9 @@ public class HouseService implements IHouseService {
     public Page<House> findAll(Pageable pageable) {
         return houseRepository.findAll(pageable);
     }
+
+    @Override
+    public List<House> getHousesWithImagesByUserId(Long userId) {
+        return houseRepository.findByUserIdWithImages(userId);
+    }
 }

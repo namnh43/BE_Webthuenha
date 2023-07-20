@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.List;
 @Repository
 public interface HouseRepository extends JpaRepository<House, Long> {
     Iterable<House> findByUser(User user);
-    @Query("SELECT h, i.fileUrl FROM House h LEFT JOIN Image i ON i.house.id = h.id WHERE h.user.id = ?1")
-    List<House> findByUserIdWithImages(Long userId);
+    @Query("SELECT h FROM House h JOIN FETCH h.images WHERE h.user.id = :userId")
+    List<House> findByUserIdWithImages(@Param("userId") Long userId);
     //     Page<House> findAll(Pageable pageable);
 
 
