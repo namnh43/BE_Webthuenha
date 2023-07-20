@@ -20,9 +20,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private User user_id;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     @ManyToOne
-    private House house_id;
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
+    private House house;
     private Date start_date;
     private Date end_date;
     private int price;

@@ -21,7 +21,6 @@ public class SpringbootApplication {
         String to = "gathidungru@gmail.com";
         String subject = "Test Email";
         String text = "Công ngu.";
-
         emailService.sendSimpleEmail(to, subject, text);
     }
 

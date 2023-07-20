@@ -1,4 +1,4 @@
-package com.example.springboot.controller.user;
+package com.example.springboot.controller.hostController;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;

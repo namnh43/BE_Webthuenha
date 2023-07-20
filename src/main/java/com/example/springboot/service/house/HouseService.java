@@ -4,6 +4,9 @@ import com.example.springboot.model.House;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,4 +39,8 @@ public class HouseService implements IHouseService{
     public Iterable<House> findByUser(User user) {
         return houseRepository.findByUser(user);
     }
+//    public Page<House> getUsers(int pageNumber, int pageSize) {
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//        return houseRepository.findAll(pageable);
+//    }
 }

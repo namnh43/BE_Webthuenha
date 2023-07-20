@@ -19,5 +19,6 @@ public class Image {
     private Long id;
     private String file_url;
     @ManyToOne
-    private House house_id;
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
+    private House house;
 }
