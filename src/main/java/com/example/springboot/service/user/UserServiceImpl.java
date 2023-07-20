@@ -3,8 +3,9 @@ package com.example.springboot.service.user;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
-import com.example.springboot.service.UserService;
+
 import com.example.springboot.service.mail.EmailService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllHosts() {
         return userRepository.findAllByRole(Role.HOST);
+    }
+
+    @Override
+    public User updateRoleToHost(String username) {
+        return null;
     }
 
     @Override
@@ -65,6 +71,12 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public List<User> getUsersWithApplyHost() {
+        return userRepository.findByApplyHost(true);
+    }
+
 
     @Override
     public List<User> findAll() {

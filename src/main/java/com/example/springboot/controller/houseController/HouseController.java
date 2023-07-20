@@ -1,9 +1,11 @@
 package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
+
 import com.example.springboot.model.User;
-import com.example.springboot.service.UserService;
 import com.example.springboot.service.house.IHouseService;
+
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -65,4 +68,10 @@ public class HouseController {
         house.setId(id);
         return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
     }
+
+    @GetMapping("user/{userId}")
+    public List<House> getHousesWithImagesByUserId(@PathVariable Long userId) {
+        return houseService.getHousesWithImagesByUserId(userId);
+    }
+
 }
