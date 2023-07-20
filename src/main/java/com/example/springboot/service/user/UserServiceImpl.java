@@ -3,8 +3,11 @@ package com.example.springboot.service.user;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
-import com.example.springboot.service.UserService;
+
+import com.example.springboot.service.mail.EmailService;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,20 +20,56 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
     @Override
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) {
-                return userRepository.findByUsername(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            }
-        };
+        return username -> userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Override
     public List<User> getAllHosts() {
         return userRepository.findAllByRole(Role.HOST);
+    }
+
+    @Override
+    public User acceptHost(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getRole().equals(Role.ADMIN)) return null;
+            user.setRole(Role.HOST);
+            user.setApplyHost(false);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "Accept Host";
+            String text = "Welcome to HomeLand. You are now a host";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User rejectHost(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setApplyHost(false);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "Reject Host";
+            String text = "Sorry. You are not qualified to be a host!";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getUsersWithApplyHost() {
+        return userRepository.findByApplyHost(true);
     }
 
 
@@ -52,6 +91,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void remove(Long id) {
-
+        userRepository.deleteById(id);
     }
 }
