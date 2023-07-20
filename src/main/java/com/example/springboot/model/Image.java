@@ -17,7 +17,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String file_url;
+    private String fileUrl;
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house;
