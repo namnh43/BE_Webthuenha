@@ -80,6 +80,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void remove(Long id) {
-
+        userRepository.deleteById(id);
     }
 }
