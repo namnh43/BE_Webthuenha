@@ -32,17 +32,15 @@ public class AdminController {
     }
     @PostMapping("/accept-host/{id}")
     public ResponseEntity<User> acceptHost(@PathVariable Long id){
-        if (userService.acceptHost(id) != null) {
-            return ResponseEntity.ok(userService.acceptHost(id));
-        }
+        User user =  userService.acceptHost(id);
+        if (user != null) return ResponseEntity.ok(user);
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/reject-host/{id}")
     public ResponseEntity<User> rejectHost(@PathVariable Long id){
-        if (userService.rejectHost(id) != null) {
-            return ResponseEntity.ok(userService.rejectHost(id));
-        }
+        User user =  userService.rejectHost(id);
+        if (user != null) return ResponseEntity.ok(user);
         return ResponseEntity.notFound().build();
     }
 

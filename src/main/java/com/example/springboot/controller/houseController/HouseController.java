@@ -26,7 +26,7 @@ public class HouseController {
     @Autowired
     public UserService userService;
 
-    @GetMapping("find/{id}")
+    @GetMapping("host/{id}")
     public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
         Optional<User> optionalUser = userService.findById(id);
         if (optionalUser.isEmpty()) {
