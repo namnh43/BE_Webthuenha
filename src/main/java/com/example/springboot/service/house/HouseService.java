@@ -39,8 +39,9 @@ public class HouseService implements IHouseService{
     public Iterable<House> findByUser(User user) {
         return houseRepository.findByUser(user);
     }
-//    public Page<House> getUsers(int pageNumber, int pageSize) {
-//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-//        return houseRepository.findAll(pageable);
-//    }
+
+    @Override
+    public Page<House> findAll(Pageable pageable) {
+        return houseRepository.findAll(pageable);
+    }
 }
