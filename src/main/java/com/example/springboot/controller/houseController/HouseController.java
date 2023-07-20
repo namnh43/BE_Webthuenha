@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -60,5 +61,10 @@ public class HouseController {
         }
         house.setId(id);
         return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
+    }
+
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<House>> showListByUser(@PathVariable Long userId){
+        return new ResponseEntity<>(houseService.getHousesByUserId(userId),HttpStatus.OK);
     }
 }
