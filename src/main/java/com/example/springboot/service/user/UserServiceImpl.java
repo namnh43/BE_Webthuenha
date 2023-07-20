@@ -93,10 +93,5 @@ public class UserServiceImpl implements UserService {
     public void remove(Long id) {
         userRepository.deleteById(id);
     }
-//    @Override
-//    public User updateRoleToHost(String username) {
-////        User optionalUser = userRepository.findByUsername(username);
-////        return optionalUser;
-//        return null;
-//    }
+
 }

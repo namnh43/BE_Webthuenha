@@ -59,16 +59,6 @@ public class HouseController {
         houseService.remove(id);
     }
 
-    @PutMapping("/api/{id}")
-    public ResponseEntity<House> update(@PathVariable Long id, @RequestBody House house) {
-        Optional<House> optionalHouse = houseService.findById(id);
-        if (!optionalHouse.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        house.setId(id);
-        return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
-    }
-
     @GetMapping("user/{userId}")
     public List<House> getHousesWithImagesByUserId(@PathVariable Long userId) {
         return houseService.getHousesWithImagesByUserId(userId);
