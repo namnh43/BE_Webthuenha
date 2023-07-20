@@ -38,6 +38,8 @@ public class User implements UserDetails {
     private String phoneNumber;
     private Long addressId;
     private String profileImage;
+    private boolean applyHost=false;
+    private boolean isActive =true;
 
     @Enumerated(EnumType.STRING)
     private Role role;

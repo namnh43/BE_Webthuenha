@@ -1,7 +1,10 @@
 package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
+
+import com.example.springboot.model.User;
 import com.example.springboot.service.house.IHouseService;
+
 import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +23,14 @@ public class HouseController {
     @Autowired
     public UserService userService;
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Optional<House>> DetailHouse(@PathVariable Long id){
-//        Optional<House> house = houseService.findById(id);
-//        if (house != null) {
-//            return new ResponseEntity<>(house, HttpStatus.OK);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-
+    @GetMapping("find/{id}")
+    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
+        Optional<User> optionalUser = userService.findById(id);
+        if (!optionalUser.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(houseService.getHouseByUser(optionalUser.get()),HttpStatus.OK);
+    }
     @GetMapping("")
     public ResponseEntity<Iterable<House>> listHouse() {
         return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
@@ -63,8 +65,5 @@ public class HouseController {
         return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
     }
 
-    @GetMapping("user/{userId}")
-    public ResponseEntity<List<House>> showListByUser(@PathVariable Long userId){
-        return new ResponseEntity<>(houseService.getHousesByUserId(userId),HttpStatus.OK);
-    }
+
 }

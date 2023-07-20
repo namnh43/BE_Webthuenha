@@ -18,12 +18,13 @@ public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int total_bedrooms;
-    private int total_bathrooms;
-    private int address_id;
+    private int totalBedrooms;
+    private int totalBathrooms;
+    private int addressId;
     private int price;
     @ManyToOne
-    private User user_id;
-    private Date create_at;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+    private Date createAt;
     private String status;
 }
