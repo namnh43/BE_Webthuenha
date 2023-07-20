@@ -37,11 +37,13 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            if (user.getRole().equals(Role.ADMIN)) return null;
             user.setRole(Role.HOST);
+            user.setApplyHost(false);
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "Accept Host";
-            String text = "Welcome";
+            String text = "Welcome to HomeLand. You are now a host";
             emailService.sendSimpleEmail(to, subject, text);
             return user;
         }
@@ -53,14 +55,16 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            user.setApplyHost(false);
+            userRepository.save(user);
             String to = user.getEmail();
             String subject = "Reject Host";
-            String text = "Sorry";
+            String text = "Sorry. You are not qualified to be a host!";
             emailService.sendSimpleEmail(to, subject, text);
+            return user;
         }
         return null;
     }
-
 
     @Override
     public List<User> findAll() {

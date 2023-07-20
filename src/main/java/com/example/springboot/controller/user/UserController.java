@@ -52,4 +52,17 @@ public class UserController {
 
         return ResponseEntity.ok("Password changed successfully");
     }
+
+    @PostMapping("/apply-host")
+    public ResponseEntity<String> applyHost(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        User user = userOptional.get();
+        user.setApplyHost(true);
+        userRepository.save(user);
+        return ResponseEntity.ok("Apply host successfully");
+    }
 }
