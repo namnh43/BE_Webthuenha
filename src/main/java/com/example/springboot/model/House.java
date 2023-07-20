@@ -20,14 +20,14 @@ public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int total_bedrooms;
-    private int total_bathrooms;
-    private int address_id;
+    private int totalBedrooms;
+    private int totalBathrooms;
+    private int addressId;
     private int price;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    private Date create_at;
+    private Date createAt;
     private String status;
     @OneToMany(mappedBy = "house")
     private List<Image> images;

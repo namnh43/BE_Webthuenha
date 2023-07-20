@@ -25,10 +25,10 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house;
-    private Date start_date;
-    private Date end_date;
+    private Date startDate;
+    private Date endDate;
     private int price;
     private int total;
-    private Date create_at;
-    private Date update_at;
+    private Date createAt;
+    private Date updateAt;
 }
