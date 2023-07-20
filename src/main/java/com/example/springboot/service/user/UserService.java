@@ -12,4 +12,7 @@ public interface UserService extends IGeneralService<User> {
     UserDetailsService userDetailsService();
     List<User> getAllHosts();
     User updateRoleToHost(String username);
+    User acceptHost(Long id);
+
+    User rejectHost(Long id);
 }

@@ -29,7 +29,7 @@ public class HouseController {
     @GetMapping("find/{id}")
     public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
         Optional<User> optionalUser = userService.findById(id);
-        if (!optionalUser.isPresent()) {
+        if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(houseService.findByUser(optionalUser.get()),HttpStatus.OK);
