@@ -15,4 +15,5 @@ public interface UserService extends IGeneralService<User> {
     User acceptHost(Long id);
 
     User rejectHost(Long id);
+    List<User> getUsersWithApplyHost();
 }

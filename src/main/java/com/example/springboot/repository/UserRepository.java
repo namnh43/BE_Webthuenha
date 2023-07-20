@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.username, h.createAt, h.price, u.isActive FROM User u JOIN House h WHERE u.role = 'HOST'")
     List<Object[]> findHosts();
+
+    List<User> findByApplyHost(Boolean applyHost);
 }

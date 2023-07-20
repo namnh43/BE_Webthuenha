@@ -67,6 +67,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public List<User> getUsersWithApplyHost() {
+        return userRepository.findByApplyHost(true);
+    }
+
 
     @Override
     public List<User> findAll() {
