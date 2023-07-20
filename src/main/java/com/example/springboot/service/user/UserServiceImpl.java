@@ -3,7 +3,6 @@ package com.example.springboot.service.user;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
-import com.example.springboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,5 +52,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void remove(Long id) {
 
+    }
+    @Override
+    public User updateRoleToHost(String username) {
+//        User optionalUser = userRepository.findByUsername(username);
+//        return optionalUser;
+        return null;
     }
 }

@@ -2,7 +2,7 @@ package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
 import com.example.springboot.service.house.IHouseService;
-import com.example.springboot.service.UserService;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

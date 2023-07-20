@@ -1,7 +1,7 @@
 package com.example.springboot.controller.adminController;
 
 import com.example.springboot.model.User;
-import com.example.springboot.service.UserService;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
