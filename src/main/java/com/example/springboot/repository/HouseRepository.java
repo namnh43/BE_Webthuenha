@@ -17,4 +17,5 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     List<House> findByUserIdWithImages(Long userId);
     //     Page<House> findAll(Pageable pageable);
 
+
 }

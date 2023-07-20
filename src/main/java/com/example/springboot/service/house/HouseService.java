@@ -41,23 +41,13 @@ public class HouseService implements IHouseService {
         houseRepository.deleteById(id);
     }
 
-
     @Override
-    public Iterable<House> getHouseByUser(User user) {
+    public Iterable<House> findByUser(User user) {
         return null;
     }
 
-    //    @Override
-//    public Iterable<House> findByUser(User user) {
-//        return houseRepository.findByUser(user);
     @Override
-    public List<Object[]> findHousesByUserIdWithImages(Long userId) {
-        return houseRepository.findByUserIdWithImages(userId);
+    public Page<House> findAll(Pageable pageable) {
+        return houseRepository.findAll(pageable);
     }
-
-
-//    public Page<House> getUsers(int pageNumber, int pageSize) {
-//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-//        return houseRepository.findAll(pageable);
-//    }
 }
