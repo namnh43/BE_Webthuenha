@@ -1,9 +1,11 @@
 package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
+import com.example.springboot.model.Image;
 import com.example.springboot.model.User;
 import com.example.springboot.service.UserService;
 import com.example.springboot.service.house.IHouseService;
+import com.example.springboot.service.img.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,8 +25,10 @@ public class HouseController {
     public IHouseService houseService;
     @Autowired
     public UserService userService;
+    @Autowired
+    public IImageService imageService;
 
-    @GetMapping("find/{id}")
+    @GetMapping("/host/{id}")
     public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
         Optional<User> optionalUser = userService.findById(id);
         if (!optionalUser.isPresent()) {
@@ -46,21 +51,38 @@ public class HouseController {
         return new ResponseEntity<>(optionalHouse.get(), HttpStatus.OK);
     }
 
-    @PostMapping("/api")
-    public ResponseEntity<House> createHouse(@RequestBody House house) {
-        return new ResponseEntity<>(houseService.save(house), HttpStatus.CREATED);
+    @PostMapping("/create/{id}")
+    public ResponseEntity<House> createHouse(@PathVariable long id,@RequestBody House house) {
+        Optional<User> optionalUser = userService.findById(id);
+        if (!optionalUser.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        House house1 = houseService.save(house);
+        house1.setUser(optionalUser.get());
+        Iterable<Image> images = house.getImages();
+        for (Image image:images){
+            image.setHouse(house1);
+            imageService.save(image);
+        }
+        return new ResponseEntity<>(houseService.save(house1), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void remove(@PathVariable Long id) {
         houseService.remove(id);
     }
 
-    @PutMapping("/api/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<House> update(@PathVariable Long id, @RequestBody House house) {
         Optional<House> optionalHouse = houseService.findById(id);
         if (!optionalHouse.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        imageService.deleteByHouseId(id);
+        Iterable<Image> images = house.getImages();
+        for (Image image:images){
+            image.setHouse(house);
+            imageService.save(image);
         }
         house.setId(id);
         return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
