@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,14 +42,15 @@ public class HouseService implements IHouseService {
         return houseRepository.findByUser(user);
     }
 
-    @Override
-    public Page<House> findAll(Pageable pageable) {
-        return houseRepository.findAll(pageable);
-    }
 
     @Override
     public Long countHouseByUserId(Long userId) {
         return houseRepository.countByUserId(userId);
+    }
+
+    @Override
+    public List<House> findBySearchCriteria(int totalBedrooms, int totalBathrooms, String address, double minPrice, double maxPrice) {
+        return houseRepository.findBySearchCriteria(totalBedrooms,totalBathrooms,address,minPrice,maxPrice);
     }
 
 }
