@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HouseRepository extends JpaRepository<House,Long> {
-//     Iterable<House> findByUser(User user);
-
+     Iterable<House> findByUser(User user);
 }

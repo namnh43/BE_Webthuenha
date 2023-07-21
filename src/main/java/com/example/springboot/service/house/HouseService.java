@@ -37,7 +37,7 @@ public class HouseService implements IHouseService {
 
     @Override
     public Iterable<House> findByUser(User user) {
-        return null;
+        return houseRepository.findByUser(user);
     }
 
     @Override
