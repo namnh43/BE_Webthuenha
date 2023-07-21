@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String email;
     @Pattern(regexp = "^(0)\\d{9}$", message = "Phone number must start with 0 and have 10 digits in total")
     private String phoneNumber;
-    private Long addressId;
+    private String address;
     private String profileImage;
     private Date createAt;
     private boolean applyHost=false;
@@ -72,6 +72,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     @PrePersist
     public void setCreatedAt() {
             this.createAt = new Date(new java.util.Date().getTime());

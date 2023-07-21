@@ -30,7 +30,17 @@ public class House {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     private Date createAt;
-    private String status;
+    private Double ratingScore;
+    private Long numberOfRented;
+
+    @Enumerated(EnumType.STRING)
+    private StatusHouse statusHouse;
+
     @OneToMany(mappedBy = "house")
     private List<Image> images;
+
+    @PrePersist
+    public void setCreatedAt() {
+        this.createAt = new Date(new java.util.Date().getTime());
+    }
 }

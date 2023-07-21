@@ -27,8 +27,19 @@ public class Reservation {
     private House house;
     private Date startDate;
     private Date endDate;
-    private int price;
-    private int total;
+    private Integer price;
+    private Integer total;
     private Date createAt;
     private Date updateAt;
+    @OneToOne
+    @JoinColumn(name = "review_id", referencedColumnName = "id")
+    private Review review;
+
+    @Enumerated(EnumType.STRING)
+    private StatusReservation statusReservation;
+
+    @PrePersist
+    public void setCreatedAt() {
+        this.createAt = new Date(new java.util.Date().getTime());
+    }
 }
