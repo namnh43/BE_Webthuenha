@@ -19,10 +19,6 @@ public interface UserService extends IGeneralService<User> {
     User rejectHost(Long id, String message);
     ResponseEntity<String> applyHost(String username);
 
-    User acceptHost(Long id);
-
-    User rejectHost(Long id);
-
     User blockUser(Long id);
 
     List<User> getUsersWithApplyHost();
