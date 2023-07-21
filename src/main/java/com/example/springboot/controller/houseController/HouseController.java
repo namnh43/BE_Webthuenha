@@ -70,7 +70,7 @@ public class HouseController {
         houseService.remove(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<House> update(@PathVariable Long id, @RequestBody House house) {
         Optional<House> optionalHouse = houseService.findById(id);
         if (!optionalHouse.isPresent()) {
