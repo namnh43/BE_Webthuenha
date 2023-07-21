@@ -76,14 +76,15 @@ public class HouseController {
         if (!optionalHouse.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        imageService.deleteByHouseId(id);
+        imageService.deleteAllByHouse(optionalHouse.get());
+        house.setId(id);
+        House house1 = houseService.save(house);
         Iterable<Image> images = house.getImages();
         for (Image image:images){
-            image.setHouse(house);
+            image.setHouse(house1);
             imageService.save(image);
         }
-        house.setId(id);
-        return new ResponseEntity<>(houseService.save(house), HttpStatus.OK);
+        return new ResponseEntity<>(houseService.save(house1), HttpStatus.OK);
     }
 
 }

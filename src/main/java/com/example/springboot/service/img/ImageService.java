@@ -5,6 +5,7 @@ import com.example.springboot.model.Image;
 import com.example.springboot.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,7 +37,10 @@ public class ImageService implements IImageService {
     public Iterable<Image> findByHouse(House house) {
         return imageRepository.findByHouse(house);
     }
-    public void deleteByHouseId(Long houseId){
-        imageRepository.deleteByHouseId(houseId);
+
+    @Override
+    @Transactional
+    public void deleteAllByHouse(House house) {
+        imageRepository.deleteAllByHouse(house);
     }
 }

@@ -7,5 +7,5 @@ import com.example.springboot.service.IGeneralService;
 public interface IImageService extends IGeneralService<Image> {
     Iterable<Image> findByHouse(House house);
 
-    void deleteByHouseId(Long houseId);
+    void deleteAllByHouse(House house);
 }
