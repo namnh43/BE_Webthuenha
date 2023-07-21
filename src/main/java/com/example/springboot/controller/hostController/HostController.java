@@ -22,4 +22,8 @@ public class HostController {
         return ResponseEntity.ok(userService.getAllHosts());
     }
 
+    @GetMapping("/{userId}/count")
+    public Long countHousesByUserId(@PathVariable Long userId) {
+        return userService.countHousesByUserId(userId);
+    }
 }

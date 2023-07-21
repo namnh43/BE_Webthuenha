@@ -12,8 +12,7 @@ public class ImageService implements IImageService{
         return null;
     }
 
-    @Override
-    public Optional<Image> findById(Long id) {
+      public Optional<Image> findById(Long id) {
         return Optional.empty();
     }
 
