@@ -31,15 +31,15 @@ public class AdminController {
         return new ResponseEntity<>(userService.getUsersWithApplyHost(), HttpStatus.OK);
     }
     @PostMapping("/accept-host/{id}")
-    public ResponseEntity<User> acceptHost(@PathVariable Long id){
-        User user =  userService.acceptHost(id);
+    public ResponseEntity<User> acceptHost(@PathVariable Long id, @RequestBody String message){
+        User user =  userService.acceptHost(id, message);
         if (user != null) return ResponseEntity.ok(user);
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/reject-host/{id}")
-    public ResponseEntity<User> rejectHost(@PathVariable Long id){
-        User user =  userService.rejectHost(id);
+    public ResponseEntity<User> rejectHost(@PathVariable Long id, @RequestBody String message){
+        User user =  userService.rejectHost(id, message);
         if (user != null) return ResponseEntity.ok(user);
         return ResponseEntity.notFound().build();
     }
