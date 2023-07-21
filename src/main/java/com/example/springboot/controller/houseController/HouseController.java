@@ -3,9 +3,9 @@ package com.example.springboot.controller.houseController;
 import com.example.springboot.model.House;
 import com.example.springboot.model.Image;
 import com.example.springboot.model.User;
-import com.example.springboot.service.UserService;
 import com.example.springboot.service.house.IHouseService;
 import com.example.springboot.service.img.IImageService;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +29,7 @@ public class HouseController {
     @GetMapping("/host/{id}")
     public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
         Optional<User> optionalUser = userService.findById(id);
-        if (!optionalUser.isPresent()) {
+        if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(houseService.findByUser(optionalUser.get()),HttpStatus.OK);
@@ -72,7 +70,7 @@ public class HouseController {
         houseService.remove(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<House> update(@PathVariable Long id, @RequestBody House house) {
         Optional<House> optionalHouse = houseService.findById(id);
         if (!optionalHouse.isPresent()) {
