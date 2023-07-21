@@ -5,16 +5,16 @@ import com.example.springboot.model.User;
 import com.example.springboot.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+
 @Service
 
-public class HouseService implements IHouseService{
+public class HouseService implements IHouseService {
     @Autowired
     private HouseRepository houseRepository;
+
     @Override
     public Iterable<House> findAll() {
         return houseRepository.findAll();
@@ -37,11 +37,12 @@ public class HouseService implements IHouseService{
 
     @Override
     public Iterable<House> findByUser(User user) {
-        return houseRepository.findByUser(user);
+        return null;
     }
 
     @Override
     public Page<House> findAll(Pageable pageable) {
         return houseRepository.findAll(pageable);
     }
+
 }

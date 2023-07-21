@@ -1,6 +1,6 @@
 package com.example.springboot.configuration;
 
-import com.example.springboot.service.UserService;
+import com.example.springboot.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable().authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/jwt/**").permitAll()
-                                .requestMatchers("/admin**").hasAuthority("ADMIN")
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
