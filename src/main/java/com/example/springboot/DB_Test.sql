@@ -9,3 +9,11 @@ values ('1','haido','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ
        ('6','hai123','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','gathidungru@gmail.com','Do','Trong Hai','0354666699','123456.jgp','','USER',NOW(),0,0),
        ('7','tronghai','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','tronghai1710@gmail.com','Do','Trong Hai','0354666699','123456.jgp','','USER',NOW(),0,0),
        ('8','hai456','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','hai456@gmail.com','Do','Trong Hai','0354666699','123456.jgp','','USER',NOW(),0,0);
+
+INSERT INTO houses (name, total_bedrooms, total_bathrooms, address, price, description, user_id, rating_score, number_of_rented, status_house, create_at)
+VALUES ('tuan House', 3, 2, 'ThaiBinh', 1000, 'A beautiful house', 4, 4.5, 0, 'Active', NOW()),
+       ('tuan2 House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 4, 4.5, 0, 'Active', NOW()),
+       ('nam House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 3, 4.5, 0, 'Active', NOW()),
+       ('nam2 House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 3, 4.5, 0, 'Active', NOW()),
+       ('nam3 House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 3, 4.5, 0, 'Active', NOW()),
+       ('cong House', 3, 1, 'BacGiang', 1000, 'A beautiful house', 5, 4.5, 0, 'Active', NOW());
