@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByApplyHost(Boolean applyHost);
     @Query("SELECT u FROM User u WHERE u.role = :role")
     List<User> findHostUsers(@Param("role") Role role);
+
+    User findByIdAndRole(Long id,Role role);
 }

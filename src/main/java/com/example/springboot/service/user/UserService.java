@@ -16,4 +16,6 @@ public interface UserService extends IGeneralService<User> {
     User rejectHost(Long id);
     List<User> getUsersWithApplyHost();
     List<Map<String, Object>> getHostUsersWithHouseCount();
+    User getHostById(Long id);
+    User updateHostById(Long id, User user);
 }

@@ -33,6 +33,11 @@ public class AdminController {
         return new ResponseEntity<>(userService.getUsersWithApplyHost(), HttpStatus.OK);
     }
 
+    @GetMapping("host/{id}")
+    public ResponseEntity<User> detailHostById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getHostById(id), HttpStatus.OK);
+    }
+
     @PostMapping("/accept-host/{id}")
     public ResponseEntity<User> acceptHost(@PathVariable Long id){
         User user =  userService.acceptHost(id);

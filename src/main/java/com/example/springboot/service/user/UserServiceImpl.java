@@ -113,4 +113,25 @@ public class UserServiceImpl implements UserService {
 
         return result;
     }
+
+    @Override
+    public User getHostById(Long id) {
+        return userRepository.findByIdAndRole(id, Role.HOST);
+    }
+
+    @Override
+    public User updateHostById(Long id, User user) {
+        User existingUser = userRepository.findByIdAndRole(id, Role.HOST);
+        if (existingUser != null) {
+            existingUser.setEmail(user.getEmail());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setPhoneNumber(user.getPhoneNumber());
+            existingUser.setAddressId(user.getAddressId());
+            existingUser.setProfileImage(user.getProfileImage());
+            // cập nhật các thông tin khác của người dùng
+            return userRepository.save(existingUser);
+        }
+        return null;
+    }
 }
