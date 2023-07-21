@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Autowired
     private EmailService emailService;
-
+    @Autowired
+    private IHouseService houseService;
     @Override
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User acceptHost(Long id, String message) {
+    public User acceptHost(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -62,14 +63,15 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "Accept Host";
-            emailService.sendSimpleEmail(to, subject, message);
+            String text = "Welcome to HomeLand. You are now a host";
+            emailService.sendSimpleEmail(to, subject, text);
             return user;
         }
         return null;
     }
 
     @Override
-    public User rejectHost(Long id, String message) {
+    public User rejectHost(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -77,11 +79,47 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "Reject Host";
-            emailService.sendSimpleEmail(to, subject, message);
+            String text = "Sorry. You are not qualified to be a host!";
+            emailService.sendSimpleEmail(to, subject, text);
             return user;
         }
         return null;
     }
+
+    @Override
+    public User blockUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setBlock(true);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "your account is locked";
+            String text = "So sorry. You violated some community terms so your account has been locked. Please contact admin for further assistance.";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User unlockUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getRole().equals(Role.ADMIN)) return null;
+            user.setBlock(false);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "UnLock Account";
+            String text = "Welcome to HomeLand. You are sign in";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+
 
     @Override
     public List<User> getUsersWithApplyHost() {
@@ -108,5 +146,44 @@ public class UserServiceImpl implements UserService {
     @Override
     public void remove(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> getHostUsersWithHouseCount() {
+        List<User> hostUserList = userRepository.findHostUsers(Role.HOST);
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (User hostUser : hostUserList) {
+            Long houseCount = houseService.countHouseByUserId(hostUser.getId());
+
+            Map<String, Object> hostUserWithHouseCount = new HashMap<>();
+            hostUserWithHouseCount.put("user", hostUser);
+            hostUserWithHouseCount.put("houseCount", houseCount);
+
+            result.add(hostUserWithHouseCount);
+        }
+
+        return result;
+    }
+
+    @Override
+    public User getHostById(Long id) {
+        return userRepository.findByIdAndRole(id, Role.HOST);
+    }
+
+    @Override
+    public User updateHostById(Long id, User user) {
+        User existingUser = userRepository.findByIdAndRole(id, Role.HOST);
+        if (existingUser != null) {
+            existingUser.setEmail(user.getEmail());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setPhoneNumber(user.getPhoneNumber());
+            existingUser.setAddress(user.getAddress());
+            existingUser.setProfileImage(user.getProfileImage());
+            // cập nhật các thông tin khác của người dùng
+            return userRepository.save(existingUser);
+        }
+        return null;
     }
 }
