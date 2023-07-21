@@ -52,4 +52,18 @@ public class AdminController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/block-user/{id}")
+    public ResponseEntity<User> blockUser(@PathVariable Long id){
+        User user =  userService.blockUser(id);
+        if (user != null) return ResponseEntity.ok(user);
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/unlock-user/{id}")
+    public ResponseEntity<User> unlockUser(@PathVariable Long id){
+        User user =  userService.acceptHost(id);
+        if (user != null) return ResponseEntity.ok(user);
+        return ResponseEntity.notFound().build();
+    }
+
 }

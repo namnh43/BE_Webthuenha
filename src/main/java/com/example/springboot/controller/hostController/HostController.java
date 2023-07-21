@@ -19,8 +19,8 @@ public class HostController {
     @Autowired
     private UserService userService;
 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
-    }
+//    @PutMapping("/user/{id}")
+//    public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
+//        return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
+//    }
 }

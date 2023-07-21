@@ -70,6 +70,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User blockUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setBlock(true);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "your account is locked";
+            String text = "So sorry. You violated some community terms so your account has been locked. Please contact admin for further assistance.";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User unlockUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (user.getRole().equals(Role.ADMIN)) return null;
+            user.setBlock(false);
+            userRepository.save(user);
+            String to = user.getEmail();
+            String subject = "UnLock Account";
+            String text = "Welcome to HomeLand. You are sign in";
+            emailService.sendSimpleEmail(to, subject, text);
+            return user;
+        }
+        return null;
+    }
+
+
+
+    @Override
     public List<User> getUsersWithApplyHost() {
         return userRepository.findByApplyHost(true);
     }

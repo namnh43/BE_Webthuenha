@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> DetailUser(@PathVariable Long id) {
+    public ResponseEntity<User> detailUser(@PathVariable Long id) {
         Optional<User> user = userService.findById(id);
         if (!user.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -75,5 +75,10 @@ public class UserController {
         user.setApplyHost(true);
         userRepository.save(user);
         return ResponseEntity.ok("Apply host successfully");
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
+        return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
     }
 }

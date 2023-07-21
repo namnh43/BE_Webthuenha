@@ -39,6 +39,7 @@ public class User implements UserDetails {
     private String profileImage;
     private Date createAt;
     private boolean applyHost=false;
+    private boolean isBlock=true;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -70,5 +71,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    @PrePersist
+    public void setCreatedAt() {
+            this.createAt = new Date(new java.util.Date().getTime());
     }
 }
