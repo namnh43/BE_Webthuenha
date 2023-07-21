@@ -17,13 +17,6 @@ import java.util.Optional;
 public class HostController {
     @Autowired
     private UserService userService;
-    @GetMapping("/list-host")
-    public ResponseEntity<Iterable<User>> showListHost(){
-        return ResponseEntity.ok(userService.getAllHosts());
-    }
 
-    @GetMapping("/{userId}/count")
-    public Long countHousesByUserId(@PathVariable Long userId) {
-        return userService.countHousesByUserId(userId);
-    }
+
 }

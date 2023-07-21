@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -22,8 +23,9 @@ public class AdminController {
     }
 
     @GetMapping("/list-host")
-    public ResponseEntity<Iterable<User>> showListHost(){
-        return ResponseEntity.ok(userService.getAllHosts());
+    public ResponseEntity<List<Map<String, Object>>> getHostUsersWithHouseCount() {
+        List<Map<String, Object>> hostUserHouseCountList = userService.getHostUsersWithHouseCount();
+        return ResponseEntity.ok(hostUserHouseCountList);
     }
 
     @GetMapping("/apply-host")

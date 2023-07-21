@@ -4,6 +4,7 @@ import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 
+import com.example.springboot.service.house.IHouseService;
 import com.example.springboot.service.mail.EmailService;
 
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private IHouseService houseService;
     @Override
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
@@ -95,7 +97,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long countHousesByUserId(Long userId) {
-        return userRepository.countHousesByUserId(userId);
+    public List<Map<String, Object>> getHostUsersWithHouseCount() {
+        List<User> hostUserList = userRepository.findHostUsers(Role.HOST);
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (User hostUser : hostUserList) {
+            Long houseCount = houseService.countHouseByUserId(hostUser.getId());
+
+            Map<String, Object> hostUserWithHouseCount = new HashMap<>();
+            hostUserWithHouseCount.put("user", hostUser);
+            hostUserWithHouseCount.put("houseCount", houseCount);
+
+            result.add(hostUserWithHouseCount);
+        }
+
+        return result;
     }
 }

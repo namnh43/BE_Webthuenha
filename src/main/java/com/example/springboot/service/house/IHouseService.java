@@ -10,4 +10,5 @@ public interface IHouseService extends IGeneralService<House> {
 
      Iterable<House> findByUser(User user);
      Page<House> findAll(Pageable pageable);
+     Long countHouseByUserId(Long userId);
 }

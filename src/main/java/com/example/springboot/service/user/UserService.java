@@ -6,6 +6,7 @@ import com.example.springboot.service.IGeneralService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService extends IGeneralService<User> {
     UserDetailsService userDetailsService();
@@ -14,5 +15,5 @@ public interface UserService extends IGeneralService<User> {
 
     User rejectHost(Long id);
     List<User> getUsersWithApplyHost();
-    Long countHousesByUserId(Long userId);
+    List<Map<String, Object>> getHostUsersWithHouseCount();
 }

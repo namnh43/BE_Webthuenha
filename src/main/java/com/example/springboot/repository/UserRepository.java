@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
     List<User> findAllByRole(Role role);
     List<User> findByApplyHost(Boolean applyHost);
-    @Query("SELECT COUNT(h) FROM House h WHERE h.user.id = :userId")
-    Long countHousesByUserId(@Param("userId") Long userId);
+    @Query("SELECT u FROM User u WHERE u.role = :role")
+    List<User> findHostUsers(@Param("role") Role role);
 }
