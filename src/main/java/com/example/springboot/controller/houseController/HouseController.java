@@ -86,4 +86,5 @@ public class HouseController {
         }
         return new ResponseEntity<>(houseService.save(house1), HttpStatus.OK);
     }
+
 }

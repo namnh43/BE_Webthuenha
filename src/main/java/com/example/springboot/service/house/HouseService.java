@@ -45,4 +45,9 @@ public class HouseService implements IHouseService {
         return houseRepository.findAll(pageable);
     }
 
+    @Override
+    public Long countHouseByUserId(Long userId) {
+        return houseRepository.countByUserId(userId);
+    }
+
 }

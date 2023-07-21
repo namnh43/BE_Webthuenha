@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -22,14 +23,16 @@ public class AdminController {
     }
 
     @GetMapping("/list-host")
-    public ResponseEntity<Iterable<User>> showListHost(){
-        return ResponseEntity.ok(userService.getAllHosts());
+    public ResponseEntity<List<Map<String, Object>>> getHostUsersWithHouseCount() {
+        List<Map<String, Object>> hostUserHouseCountList = userService.getHostUsersWithHouseCount();
+        return ResponseEntity.ok(hostUserHouseCountList);
     }
 
     @GetMapping("/apply-host")
     public ResponseEntity<List<User>> showListApplyHost(){
         return new ResponseEntity<>(userService.getUsersWithApplyHost(), HttpStatus.OK);
     }
+
     @PostMapping("/accept-host/{id}")
     public ResponseEntity<User> acceptHost(@PathVariable Long id){
         User user =  userService.acceptHost(id);
