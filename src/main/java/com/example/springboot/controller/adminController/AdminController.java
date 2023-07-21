@@ -61,7 +61,7 @@ public class AdminController {
 
     @PostMapping("/unlock-user/{id}")
     public ResponseEntity<User> unlockUser(@PathVariable Long id){
-        User user =  userService.acceptHost(id);
+        User user =  userService.unlockUser(id);
         if (user != null) return ResponseEntity.ok(user);
         return ResponseEntity.notFound().build();
     }
