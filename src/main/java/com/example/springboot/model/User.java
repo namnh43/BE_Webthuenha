@@ -38,8 +38,8 @@ public class User implements UserDetails {
     private String address;
     private String profileImage;
     private Date createAt;
-    private boolean applyHost=false;
-    private boolean isBlock=true;
+    private boolean applyHost;
+    private boolean isBlock;
 
     @Enumerated(EnumType.STRING)
     private Role role;
