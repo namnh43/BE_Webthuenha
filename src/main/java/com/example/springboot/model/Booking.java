@@ -15,7 +15,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "reservations")
 
-public class Reservation {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +36,7 @@ public class Reservation {
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private StatusReservation statusReservation;
+    private BookingStatus bookingStatus;
 
     @PrePersist
     public void setCreatedAt() {

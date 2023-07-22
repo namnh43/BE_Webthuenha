@@ -26,6 +26,7 @@ public class House {
     private String address;
     private Integer price;
     private String description;
+    private String featuredImage;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -34,7 +35,7 @@ public class House {
     private Long numberOfRented;
 
     @Enumerated(EnumType.STRING)
-    private StatusHouse statusHouse;
+    private HouseStatus houseStatus;
 
     @OneToMany(mappedBy = "house")
     private List<Image> images;

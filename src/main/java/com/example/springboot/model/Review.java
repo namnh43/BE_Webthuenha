@@ -23,7 +23,7 @@ public class Review {
     private Date createdAt;
     private Date updatedAt;
     @Enumerated(EnumType.STRING)
-    private StatusReview statusReview;
+    private ReviewStatus reviewStatus;
 
     @PrePersist
     public void setCreatedAt() {

@@ -39,7 +39,8 @@ public class GoogleOAuth2Service {
                 String familyName = (String) payload.get("family_name");
                 String givenName = (String) payload.get("given_name");
 
-                System.out.println(email + " " + emailVerified + " " + name + " " + pictureUrl + " " + locale + " " + familyName + " " + givenName);
+                System.out.println("Email: " + email + "\nEmail verified: " + emailVerified + "\nName: " + name + "\nPicture URL: " + pictureUrl + "\nLocale: " + locale + "\nFamily name: " + familyName + "\nGiven name: " + givenName);
+
             } else {
                 // Token is invalid
                 throw new RuntimeException("Invalid Google ID token.");
@@ -50,7 +51,8 @@ public class GoogleOAuth2Service {
     }
 
     public static void main(String[] args) {
-        test("eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzYmRiZmRlZGUzYmFiYjI2NTFhZmNhMjY3OGRkZThjMGIzNWRmNzYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2ODk5NTMzOTMsImF1ZCI6IjY5NjM1NDYxNTk3NS04aXZ1ZXZkbm0zZ2g5YW5rbHJvaDlrcTNtZmg0bmtvZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMjYwODgyNzUyNTY3OTIyMTk1MCIsImVtYWlsIjoibWluaHR1YW4yNjdAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjY5NjM1NDYxNTk3NS04aXZ1ZXZkbm0zZ2g5YW5rbHJvaDlrcTNtZmg0bmtvZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJNIFQiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFjSFR0Zkxtbk4tLUFJN0E5aHNickR3NDZCLWZ6TWNRdlN2SGlNT1RvUHprd3R6cTJFPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik0iLCJmYW1pbHlfbmFtZSI6IlQiLCJpYXQiOjE2ODk5NTM2OTMsImV4cCI6MTY4OTk1NzI5MywianRpIjoiNWVhOTBkYjgzNjdiM2RjNjJkZWEwYTczODM1M2MyNGFiYzlkNTE4NSJ9.UdrylHPfdQW018Oo5kJXL8904PesP2CO1ugsUdUMynLfzEo-wL2TdxVu5WBFeC65uIdQGpdjHhy-RSD6ifFgmlkuy6rqZveTfaSwNYvfcNunnGe7VQJ4xViVO86jL5URQEkJPO9VDK3EJQRMUn3j88sh-_3XPgW3zQ9weL20Y8of0YZkXyc5sUT_8A24cCECMnIthjH2geUbG9Nk9FH_PhJwsCahBcEeCYeCJ5Mu9yU_nBAZp12rnRYDxazulz-BSjaL1fd8kX6YHpRZ9cD4Zu3eAIsVPy_n3Xw4OE6Ow9qPSwcSvydh1fQj5ezEUpTTzXiyEUDNuppZ4sBd7KK0ng");
+        String accessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzYmRiZmRlZGUzYmFiYjI2NTFhZmNhMjY3OGRkZThjMGIzNWRmNzYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2ODk5ODkxMzYsImF1ZCI6IjY5NjM1NDYxNTk3NS04aXZ1ZXZkbm0zZ2g5YW5rbHJvaDlrcTNtZmg0bmtvZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwMjYwODgyNzUyNTY3OTIyMTk1MCIsImVtYWlsIjoibWluaHR1YW4yNjdAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjY5NjM1NDYxNTk3NS04aXZ1ZXZkbm0zZ2g5YW5rbHJvaDlrcTNtZmg0bmtvZy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJNIFQiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFjSFR0Zkxtbk4tLUFJN0E5aHNickR3NDZCLWZ6TWNRdlN2SGlNT1RvUHprd3R6cTJFPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik0iLCJmYW1pbHlfbmFtZSI6IlQiLCJpYXQiOjE2ODk5ODk0MzYsImV4cCI6MTY4OTk5MzAzNiwianRpIjoiYzFhMGE2OTcwNzRhYjYwODcxMDE3MmE1YmNkMmY0ZjdkMzlmMTIwNyJ9.Uu9QzADZuacZPEr-ZgrsXKM9hCaCEVyWgt5PCutBDfUtcgGIKZ6wMmEthGM34uW5NF4W8VIK9i9-4kF8XyQ9pZqg0vl3E1hyGw6QWUD44naowX6A8N55wlx0i5HoCJSh9lCrHX-YELnFE3TVUFNfkCWHmZocBg4xCGVSp8UlCiENGoH11yNVDyL7ZqqbBCL7KISyda66LdTwzzFnHDyfqfCX5wK9rwJ_XRSGks-y70Bw-ZA3qZoFZ85w68xGEzEmOy4InIb_a9xKJ8OLly2rl6cNccKpzprqU8fNz8zDSDYcKmLJ72xMpxq_O42RyRL4EJJ9Ps_vH1OaW9wBgKTX_w";
+        test(accessToken);
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.springboot.controller.user;
+package com.example.springboot.controller.userController;
 
 
 import com.example.springboot.dto.request.ChangePasswordRequest;
@@ -6,6 +6,7 @@ import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 
 import com.example.springboot.service.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,10 @@ public class UserController {
         return userService.applyHost(username);
     }
 
-    //@Bean PasswordEncoder sẽ bị gọi thành vòng lặp trong userService nên viết luôn ở controller
+
+    //@Bean PasswordEncoder sẽ bị gọi thành vòng lặp nếu đặt trong userService nên tạm thời viết luôn ở controller
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+    public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> userOptional = userRepository.findByUsername(username);
 

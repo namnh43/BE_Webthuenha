@@ -1,4 +1,4 @@
-package com.example.springboot.controller.security;
+package com.example.springboot.controller.securityController;
 
 import com.example.springboot.configuration.JwtAuthenticationFilter;
 import com.example.springboot.dto.request.SignInRequest;
