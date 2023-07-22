@@ -6,13 +6,16 @@ import com.example.springboot.model.User;
 import com.example.springboot.service.house.IHouseService;
 import com.example.springboot.service.img.IImageService;
 import com.example.springboot.service.user.UserService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 
 @RestController
@@ -27,17 +30,17 @@ public class HouseController {
     public IImageService imageService;
 
     @GetMapping("/host/{id}")
-    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id){
+    public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id) {
         Optional<User> optionalUser = userService.findById(id);
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(houseService.findByUser(optionalUser.get()),HttpStatus.OK);
+        return new ResponseEntity<>(houseService.findByUser(optionalUser.get()), HttpStatus.OK);
     }
+
     @GetMapping("")
-    public ResponseEntity<Page<House>> listHouse( @RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>(houseService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Iterable<House>> listHouse() {
+        return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -50,7 +53,7 @@ public class HouseController {
     }
 
     @PostMapping("/create/{id}")
-    public ResponseEntity<House> createHouse(@PathVariable long id,@RequestBody House house) {
+    public ResponseEntity<House> createHouse(@PathVariable long id, @RequestBody House house) {
         Optional<User> optionalUser = userService.findById(id);
         if (!optionalUser.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,7 +61,7 @@ public class HouseController {
         House house1 = houseService.save(house);
         house1.setUser(optionalUser.get());
         Iterable<Image> images = house.getImages();
-        for (Image image:images){
+        for (Image image : images) {
             image.setHouse(house1);
             imageService.save(image);
         }
@@ -80,11 +83,18 @@ public class HouseController {
         house.setId(id);
         House house1 = houseService.save(house);
         Iterable<Image> images = house.getImages();
-        for (Image image:images){
+        for (Image image : images) {
             image.setHouse(house1);
             imageService.save(image);
         }
         return new ResponseEntity<>(houseService.save(house1), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<House>> findBySearch(@Param("totalBedrooms") int totalBedrooms, @Param("totalBathrooms") int totalBathrooms,
+                                                        @Param("address") String address,
+                                                        @Param("minPrice") double minPrice,
+                                                        @Param("maxPrice") double maxPrice) {
+        return new ResponseEntity<>(houseService.findBySearchCriteria(totalBedrooms, totalBathrooms, address, minPrice, maxPrice), HttpStatus.OK);
+    }
 }
