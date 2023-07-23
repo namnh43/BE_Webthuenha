@@ -1,8 +1,8 @@
 package com.example.springboot.service.impl;
 
-import com.example.springboot.dao.request.SignInRequest;
-import com.example.springboot.dao.request.SignUpRequest;
-import com.example.springboot.dao.response.JwtAuthenticationResponse;
+import com.example.springboot.dto.request.SignInRequest;
+import com.example.springboot.dto.request.SignUpRequest;
+import com.example.springboot.dto.response.JwtAuthenticationResponse;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;

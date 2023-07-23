@@ -1,5 +1,5 @@
 package com.example.springboot.model;
 
-public enum StatusHouse {
+public enum HouseStatus {
     Active
 }

@@ -1,6 +1,6 @@
 package com.example.springboot.model;
 
-public enum StatusReview {
+public enum ReviewStatus {
     pending,
     approved,
     rejected

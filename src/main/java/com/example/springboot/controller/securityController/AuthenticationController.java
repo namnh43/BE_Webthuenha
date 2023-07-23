@@ -1,10 +1,11 @@
-package com.example.springboot.controller.security;
+package com.example.springboot.controller.securityController;
 
 import com.example.springboot.configuration.JwtAuthenticationFilter;
-import com.example.springboot.dao.request.SignInRequest;
-import com.example.springboot.dao.request.SignUpRequest;
-import com.example.springboot.dao.response.JwtAuthenticationResponse;
+import com.example.springboot.dto.request.SignInRequest;
+import com.example.springboot.dto.request.SignUpRequest;
+import com.example.springboot.dto.response.JwtAuthenticationResponse;
 import com.example.springboot.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AuthenticationController {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @PostMapping("/signup")
-    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody SignUpRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> signup(@Valid @RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 

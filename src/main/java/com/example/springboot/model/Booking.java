@@ -15,7 +15,7 @@ import java.sql.Date;
 @Entity
 @Table(name = "reservations")
 
-public class Reservation {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

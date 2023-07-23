@@ -1,5 +1,6 @@
 package com.example.springboot.service.user;
 
+import com.example.springboot.dto.request.ChangePasswordRequest;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
@@ -9,9 +10,11 @@ import com.example.springboot.service.mail.EmailService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -35,8 +38,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllByRole(Role.HOST);
     }
 
+    public ResponseEntity<String> applyHost(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        User user = userOptional.get();
+        user.setApplyHost(true);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Apply host successfully");
+    }
+
     @Override
-    public User acceptHost(Long id) {
+    public User acceptHost(Long id, String message) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -46,15 +63,14 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "Accept Host";
-            String text = "Welcome to HomeLand. You are now a host";
-            emailService.sendSimpleEmail(to, subject, text);
+            emailService.sendSimpleEmail(to, subject, message);
             return user;
         }
         return null;
     }
 
     @Override
-    public User rejectHost(Long id) {
+    public User rejectHost(Long id, String message) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -62,8 +78,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "Reject Host";
-            String text = "Sorry. You are not qualified to be a host!";
-            emailService.sendSimpleEmail(to, subject, text);
+            emailService.sendSimpleEmail(to, subject, message);
             return user;
         }
         return null;

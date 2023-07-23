@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
     List<User> findAllByRole(Role role);
+
     List<User> findByApplyHost(Boolean applyHost);
     @Query("SELECT u FROM User u WHERE u.role = :role")
     List<User> findHostUsers(@Param("role") Role role);
