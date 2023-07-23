@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private String profileImage;
     private Date createAt;
     private boolean applyHost;
-    private boolean isBlock;
+    private boolean isBlocked;
 
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setBlock(true);
+            user.setBlocked(true);
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "your account is locked";
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (user.getRole().equals(Role.ADMIN)) return null;
-            user.setBlock(false);
+            user.setBlocked(false);
             userRepository.save(user);
             String to = user.getEmail();
             String subject = "UnLock Account";
