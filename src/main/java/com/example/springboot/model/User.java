@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,22 +28,32 @@ public class User implements UserDetails {
 
     @Column(unique = true, nullable = false)
     private String username;
+
     private String password;
+
     private String firstName;
+
     private String lastName;
 
     @Column(unique = true, nullable = false)
     private String email;
-    @Pattern(regexp = "^(0)\\d{9}$", message = "Phone number must start with 0 and have 10 digits in total")
+
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
+
     private String address;
+
     private String profileImage;
+
     private Date createAt;
+
     private boolean applyHost;
+
     private boolean isBlocked;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -76,5 +87,8 @@ public class User implements UserDetails {
     @PrePersist
     public void setCreatedAt() {
             this.createAt = new Date(new java.util.Date().getTime());
+        this.profileImage = "https://cuongquach.com/wp-content/uploads/2016/05/linux-logo-356x220.png";
+
     }
+
 }
