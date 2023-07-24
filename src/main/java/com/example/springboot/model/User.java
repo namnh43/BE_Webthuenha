@@ -87,8 +87,6 @@ public class User implements UserDetails {
     @PrePersist
     public void setCreatedAt() {
             this.createAt = new Date(new java.util.Date().getTime());
-        this.profileImage = "https://cuongquach.com/wp-content/uploads/2016/05/linux-logo-356x220.png";
-
     }
 
 }
