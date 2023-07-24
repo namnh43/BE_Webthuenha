@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -86,5 +87,8 @@ public class User implements UserDetails {
     @PrePersist
     public void setCreatedAt() {
             this.createAt = new Date(new java.util.Date().getTime());
+        this.profileImage = "https://cuongquach.com/wp-content/uploads/2016/05/linux-logo-356x220.png";
+
     }
+
 }
