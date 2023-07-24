@@ -5,6 +5,7 @@ import com.example.springboot.dto.request.SignInRequest;
 import com.example.springboot.dto.request.SignUpRequest;
 import com.example.springboot.dto.response.JwtAuthenticationResponse;
 import com.example.springboot.service.AuthenticationService;
+import com.example.springboot.service.googleOAuth2.GoogleOAuth2Service;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final GoogleOAuth2Service googleOAuth2Service;
 
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signup(@Valid @RequestBody SignUpRequest request) {
@@ -26,6 +28,12 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SignInRequest request) {
         return ResponseEntity.ok(authenticationService.signin(request));
+    }
+
+    @PostMapping("/google")
+    public ResponseEntity<JwtAuthenticationResponse> signinWithGoogle(@RequestBody String accessToken) {
+        System.out.println(accessToken);
+        return ResponseEntity.ok(googleOAuth2Service.ggOAuth2Login(accessToken));
     }
 
     @PostMapping("/logout")

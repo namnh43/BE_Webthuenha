@@ -91,7 +91,8 @@ public class HouseController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Iterable<House>> findBySearch(@Param("totalBedrooms") int totalBedrooms, @Param("totalBathrooms") int totalBathrooms,
+    public ResponseEntity<Iterable<House>> findBySearch(@Param("totalBedrooms") int totalBedrooms,
+                                                        @Param("totalBathrooms") int totalBathrooms,
                                                         @Param("address") String address,
                                                         @Param("minPrice") double minPrice,
                                                         @Param("maxPrice") double maxPrice) {
