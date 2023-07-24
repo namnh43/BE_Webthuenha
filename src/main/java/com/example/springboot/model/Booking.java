@@ -13,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "reservations")
+@Table(name = "bookings")
 
 public class Booking {
     @Id
@@ -36,7 +36,7 @@ public class Booking {
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private StatusReservation statusReservation;
+    private BookingStatus bookingStatus;
 
     @PrePersist
     public void setCreatedAt() {
