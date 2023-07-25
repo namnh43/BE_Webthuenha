@@ -17,4 +17,5 @@ public interface IHouseService extends IGeneralService<House> {
                                       @Param("minPrice") double minPrice,
                                       @Param("maxPrice") double maxPrice);
      void updateHouseStatus(Long id, HouseStatus status);
+
 }

@@ -1,5 +1,7 @@
 package com.example.springboot.controller.bookingController;
 
+import com.example.springboot.Exception.NotFoundException;
+import com.example.springboot.Exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
 import com.example.springboot.model.User;
 import com.example.springboot.service.bookingService.IBookingService;
@@ -21,6 +23,20 @@ public class BookingController {
     @Autowired
     private UserService userService;
 
-    //List booking by User
+    @PutMapping("cancel/{bookingId}")
+    public ResponseEntity<String> cancelBooking(@PathVariable Long bookingId) {
+        try {
+            bookingService.cancelBookingForUser(bookingId);
+            return ResponseEntity.ok("Booking cancelled successfully");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 }
