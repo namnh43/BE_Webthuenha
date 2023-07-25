@@ -1,6 +1,7 @@
 package com.example.springboot.service.house;
 
 import com.example.springboot.model.House;
+import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.HouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,16 @@ public class HouseService implements IHouseService {
     @Override
     public List<House> findBySearchCriteria(int totalBedrooms, int totalBathrooms, String address, double minPrice, double maxPrice) {
         return houseRepository.findBySearchCriteria(totalBedrooms,totalBathrooms,address,minPrice,maxPrice);
+    }
+
+    @Override
+    public void updateHouseStatus(Long id, HouseStatus status) {
+        Optional<House> optionalHouse = houseRepository.findById(id);
+        if (optionalHouse.isPresent()) {
+            House house = optionalHouse.get();
+            house.setHouseStatus(status);
+            houseRepository.save(house);
+        }
     }
 
 }

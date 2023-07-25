@@ -1,5 +1,8 @@
 package com.example.springboot.model;
 
 public enum BookingStatus {
-    Active
+    WAITING_FOR_CHECKIN,
+    CHECKED_IN,
+    CHECKED_OUT,
+    CANCELLED
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HouseRepository extends JpaRepository<House,Long> {
@@ -24,4 +25,6 @@ public interface HouseRepository extends JpaRepository<House,Long> {
                                       @Param("address") String address,
                                       @Param("minPrice") Double minPrice,
                                       @Param("maxPrice") Double maxPrice);
+
+     Optional<House> findByName(String name);
 }

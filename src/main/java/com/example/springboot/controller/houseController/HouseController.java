@@ -1,6 +1,7 @@
 package com.example.springboot.controller.houseController;
 
 import com.example.springboot.model.House;
+import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.Image;
 import com.example.springboot.model.User;
 import com.example.springboot.service.house.IHouseService;
@@ -97,5 +98,11 @@ public class HouseController {
                                                         @Param("minPrice") double minPrice,
                                                         @Param("maxPrice") double maxPrice) {
         return new ResponseEntity<>(houseService.findBySearchCriteria(totalBedrooms, totalBathrooms, address, minPrice, maxPrice), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> updateHouseStatus(@PathVariable Long id, @RequestParam HouseStatus status) {
+        houseService.updateHouseStatus(id, status);
+        return ResponseEntity.noContent().build();
     }
 }
