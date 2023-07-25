@@ -1,7 +1,7 @@
 use project_md6;
 
 insert into users (username, password, email, first_name, last_name, phone_number, profile_image, address, role, create_at, apply_host, is_blocked)
-values ('haido','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','haido@gmail.com','Do','Trong Hai','0354666699','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','ADMIN',NOW(),0,0),
+values ('admin','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','haido@gmail.com','Do','Trong Hai','0354666699','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','ADMIN',NOW(),0,0),
        ('haingo','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','haingo@gmail.com','Ngo','Hoang Hai','0987654321','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','USER',NOW(),0,0),
        ('nam','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','nam@gmail.com','Nguyen','Hoai Nam','0147258369','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
        ('tuan','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','tuan@gmail.com','Pham','Minh Tuan','0789456123','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
@@ -105,4 +105,30 @@ VALUES ('https://huthouse.vn/wp-content/uploads/2021/12/%C4%90i%E1%BB%83m-danh-n
        ('https://agsevent.vn/wp-content/uploads/2022/09/mau-nha-homestay-gia-re-02.png',15),
        ('https://kientrucauchau.vn/wp-content/uploads/2021/12/ban-ve-3D-thiet-ke-kien-truc-homestay.jpeg',15);
 
-
+INSERT INTO bookings (user_id, house_id, start_date, end_date, price, total, create_at, update_at, booking_status)
+VALUES
+    (1, 1, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (3, 2, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (7, 3, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (2, 4, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED'),
+    (2, 5, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (2, 6, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (2, 7, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (2, 8, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED'),
+    (2, 9, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (8, 10, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (8, 11, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (8, 12, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED'),
+    (8, 13, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (8, 14, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (8, 15, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (5, 2, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED'),
+    (5, 5, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (5, 8, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (5, 9, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (5, 15, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED'),
+    (5, 4, '2023-08-01', '2023-08-07', 100, 700, NOW(), NOW(), 'BOOKING'),
+    (5, 2, '2023-09-10', '2023-09-15', 120, 600, NOW(), NOW(), 'CHECKED_IN'),
+    (5, 8, '2023-10-05', '2023-10-10', 90, 450, NOW(), NOW(), 'CHECKED_OUT'),
+    (5, 7, '2023-11-20', '2023-11-25', 80, 400, NOW(), NOW(), 'CANCELLED')
+;
