@@ -39,6 +39,9 @@ public class House {
 
     @OneToMany(mappedBy = "house")
     private List<Image> images;
+    @OneToMany(mappedBy = "house")
+    private List<Review> reviews;
+
 
     @PrePersist
     public void setCreatedAt() {

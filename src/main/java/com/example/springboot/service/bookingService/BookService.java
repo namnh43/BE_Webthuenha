@@ -24,22 +24,22 @@ public class BookService implements IBookingService{
 
     @Override
     public Iterable<Booking> findAll() {
-        return null;
+        return bookingRepository.findAll();
     }
 
     @Override
     public Optional<Booking> findById(Long id) {
-        return Optional.empty();
+        return bookingRepository.findById(id);
     }
 
     @Override
     public Booking save(Booking booking) {
-        return null;
+        return bookingRepository.save(booking);
     }
 
     @Override
     public void remove(Long id) {
-
+        bookingRepository.deleteById(id);
     }
 
     @Override

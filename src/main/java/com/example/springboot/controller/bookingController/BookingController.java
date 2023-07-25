@@ -20,7 +20,13 @@ public class BookingController {
     private IBookingService bookingService;
     @Autowired
     private UserService userService;
+    @PostMapping("/create")
+    public ResponseEntity<Booking> create(@RequestBody Booking booking){
+        System.out.println(booking);
+        return new ResponseEntity<>(bookingService.save(booking),HttpStatus.OK);
+    }
 
     //List booking by User
+
 
 }

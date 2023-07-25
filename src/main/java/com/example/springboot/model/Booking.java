@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+import static com.example.springboot.model.BookingStatus.WAITING_FOR_CHECKIN;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -36,7 +38,7 @@ public class Booking {
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus;
+    private BookingStatus bookingStatus = WAITING_FOR_CHECKIN;
 
     @PrePersist
     public void setCreatedAt() {

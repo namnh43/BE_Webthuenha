@@ -1,5 +1,6 @@
 package com.example.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,10 @@ public class Review {
     private Date updatedAt;
     @Enumerated(EnumType.STRING)
     private ReviewStatus reviewStatus;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "house_id", referencedColumnName = "id")
+    private House house;
 
     @PrePersist
     public void setCreatedAt() {
