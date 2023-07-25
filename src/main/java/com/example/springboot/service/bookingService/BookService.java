@@ -57,14 +57,14 @@ public class BookService implements IBookingService{
                 .bookingStatus(BookingStatus.WAITING_FOR_CHECKIN)
                 .build();
 
-        house.setHouseStatus(HouseStatus.InBooking);
+        house.setHouseStatus(HouseStatus.IN_BOOKING);
         houseRepository.save(house);
 
         return bookingRepository.save(booking);
     }
 
     @Override
-    public List<Booking> getBookingsByUserId(Long userId) {
-        return bookingRepository.findByUserId(userId);
+    public List<Booking> getBookingsByUser(User user) {
+        return bookingRepository.findByUser(user);
     }
 }

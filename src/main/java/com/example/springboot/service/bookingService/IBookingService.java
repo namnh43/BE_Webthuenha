@@ -12,5 +12,5 @@ public interface IBookingService extends IGeneralService<Booking> {
 
     Booking createBooking(Long userId, Long houseId, Date startDate, Date endDate, Integer price, Integer total);
 
-    List<Booking> getBookingsByUserId(Long userId);
+    List<Booking> getBookingsByUser(User user);
 }

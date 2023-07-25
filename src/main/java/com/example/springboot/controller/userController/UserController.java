@@ -81,8 +81,14 @@ public class UserController {
         return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
     }
 
-    @GetMapping("/booking/{userId}")
-    public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
-        return bookingService.getBookingsByUserId(userId);
+    @GetMapping("/list-booking")
+    public ResponseEntity<List<Booking>> getBookingsByUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isEmpty())
+             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        User user = userOptional.get();
+        return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
     }
 }

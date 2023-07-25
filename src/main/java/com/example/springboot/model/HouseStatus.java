@@ -1,8 +1,8 @@
 package com.example.springboot.model;
 
 public enum HouseStatus {
-    Empty,
-    InService,
-    InMaintenance,
-    InBooking
+    EMPTY,
+    IN_SERVICE,
+    IN_MAINTENANCE,
+    IN_BOOKING
 }
