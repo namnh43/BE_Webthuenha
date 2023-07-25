@@ -1,30 +1,108 @@
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-13903824/original/82d996fb-d7c4-46a8-a713-febd281cd69f.jpeg?im_w=1200'
-where id = 1;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=1200'
-where id = 2;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-51809333/original/0da70267-d9da-4efb-9123-2714b651c9fd.jpeg?im_w=720'
-where id = 3;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-26300485/original/ee94e6c1-6ebc-496e-af84-1502edd1b759.jpeg?im_w=720'
-where id = 4;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/6c59e24d-89f3-4475-aaca-80363792fb51.jpeg?im_w=720'
-where id = 5;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/6c59e24d-89f3-4475-aaca-80363792fb51.jpeg?im_w=720'
-where id = 6;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/airflow/Hosting-714258423682866070/original/960755ad-ce79-4606-8f17-7c2d6c64fe41.jpg?im_w=720'
-where id = 7;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-39974109/original/4bf3e6ff-555a-4553-973e-a371d4331e43.jpeg?im_w=720'
-where id = 8;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-746919020186561409/original/98f1a8c7-a263-46a8-8757-1f5d9d39f8bb.jpeg?im_w=720'
-where id = 9;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/airflow/Hosting-640811493743055902/original/d89957f7-0735-418f-b717-d99cf5fbd69a.jpg?im_w=720'
-where id = 10;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/5ce54384-cf87-483b-ba46-bada14fa9bc1.jpg?im_w=720'
-where id = 11;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-39793877/original/a0d92972-40f3-46af-a507-f93f5b945702.jpeg?im_w=720'
-where id = 12;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-609081347838263236/original/1dd85f1a-8c3a-40f2-a815-9ad2bbc5f0bb.jpeg?im_w=720'
-where id = 13;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-749944387202007594/original/4c8947f5-ff4c-481c-b78e-c46cf6111272.jpeg?im_w=720'
-where id = 14;
-Update houses set featured_image = 'https://a0.muscache.com/im/pictures/miso/Hosting-813137457313942137/original/34eaa638-9027-4e9a-9e91-239db6f2e844.jpeg?im_w=720'
-where id = 15;
+use project_md6;
+
+insert into users (username, password, email, first_name, last_name, phone_number, profile_image, address, role, create_at, apply_host, is_blocked)
+values ('haido','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','haido@gmail.com','Do','Trong Hai','0354666699','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','ADMIN',NOW(),0,0),
+       ('haingo','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','haingo@gmail.com','Ngo','Hoang Hai','0987654321','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','USER',NOW(),0,0),
+       ('nam','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','nam@gmail.com','Nguyen','Hoai Nam','0147258369','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
+       ('tuan','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','tuan@gmail.com','Pham','Minh Tuan','0789456123','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
+       ('cong','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','cong@gmail.com','Nguyen','Minh Cong','0369852147','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
+       ('hai123','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','gathidungru@gmail.com','Do','Trong Hai','0921345678','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','USER',NOW(),0,0),
+       ('tronghai','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','tronghai1710@gmail.com','Do','Trong Hai','0123987654','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','HOST',NOW(),0,0),
+       ('hai456','$2a$10$ro7PhjN6Cgn.Skvp8KkGeucFUdJ.6berWJyrvOw8btfDr4bttGOZ6','hai456@gmail.com','Do','Trong Hai','0567489321','https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg','','USER',NOW(),0,0);
+
+
+INSERT INTO houses (name, total_bedrooms, total_bathrooms, address, price, description, user_id, rating_score, number_of_rented, house_status, create_at, featured_image)
+VALUES ('tuan House', 3, 2, 'ThaiBinh', 1000, 'A beautiful house', 4, 4.5, 10, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-13903824/original/82d996fb-d7c4-46a8-a713-febd281cd69f.jpeg?im_w=1200'),
+       ('tuan2 House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 4, 4.5, 5, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=1200'),
+       ('nam House', 4, 4, 'HaNoi', 1000, 'A beautiful house', 3, 4.5, 3, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-51809333/original/0da70267-d9da-4efb-9123-2714b651c9fd.jpeg?im_w=720'),
+       ('hai House', 6, 8, 'HaNoi', 1000, 'A beautiful house', 7, 4.5, 1, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-26300485/original/ee94e6c1-6ebc-496e-af84-1502edd1b759.jpeg?im_w=720'),
+       ('hai3 House', 3, 2, 'ThaiBinh', 1000, 'A beautiful house', 3, 4.5, 8, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/6c59e24d-89f3-4475-aaca-80363792fb51.jpeg?im_w=720'),
+       ('tuan homestay', 5, 4, 'HaNoi', 1000, 'A beautiful homestay', 5, 4.5, 9, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-13016398/original/6c59e24d-89f3-4475-aaca-80363792fb51.jpeg?im_w=720'),
+       ('nam3 homestay', 5, 4, 'HaNoi', 5000, 'A beautiful homestay', 3, 4.5, 10, 'Active', NOW(),'https://a0.muscache.com/im/pictures/airflow/Hosting-714258423682866070/original/960755ad-ce79-4606-8f17-7c2d6c64fe41.jpg?im_w=720'),
+       ('nam3 House', 7, 8, 'HaNoi', 2000, 'A beautiful house', 4, 4.5, 10, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-39974109/original/4bf3e6ff-555a-4553-973e-a371d4331e43.jpeg?im_w=720'),
+       ('hai do homestay', 3, 2, 'BacNinh', 1000, 'A beautiful homestay', 3, 4.5, 10, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-746919020186561409/original/98f1a8c7-a263-46a8-8757-1f5d9d39f8bb.jpeg?im_w=720'),
+       ('Ngo Hai House', 3, 2, 'HaNoi', 1000, 'A beautiful house', 7, 4.5, 6, 'Active', NOW(),'https://a0.muscache.com/im/pictures/airflow/Hosting-640811493743055902/original/d89957f7-0735-418f-b717-d99cf5fbd69a.jpg?im_w=720'),
+       ('nam3 House', 3, 2, 'BacGiang', 1000, 'A beautiful house', 5, 4.5, 7, 'Active', NOW(),'https://a0.muscache.com/im/pictures/5ce54384-cf87-483b-ba46-bada14fa9bc1.jpg?im_w=720'),
+       ('tuan hotel', 3, 2, 'HaNoi', 1000, 'A beautiful hotel', 5, 4.5, 8, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-39793877/original/a0d92972-40f3-46af-a507-f93f5b945702.jpeg?im_w=720'),
+       ('nam3 House', 3, 2, 'BacNinh', 1000, 'A beautiful house', 3, 4.5, 9, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-609081347838263236/original/1dd85f1a-8c3a-40f2-a815-9ad2bbc5f0bb.jpeg?im_w=720'),
+       ('tuan 2 homestay', 3, 2, 'HaNoi', 1000, 'A beautiful house', 4, 4.5, 8, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-749944387202007594/original/4c8947f5-ff4c-481c-b78e-c46cf6111272.jpeg?im_w=720'),
+       ('cong House', 3, 1, 'BacGiang', 1000, 'A beautiful house', 5, 4.5, 6, 'Active', NOW(),'https://a0.muscache.com/im/pictures/miso/Hosting-813137457313942137/original/34eaa638-9027-4e9a-9e91-239db6f2e844.jpeg?im_w=720');
+
+INSERT INTO images(file_url, house_id)
+VALUES ('https://huthouse.vn/wp-content/uploads/2021/12/%C4%90i%E1%BB%83m-danh-nh%E1%BB%AFng-m%E1%BA%ABu-nh%C3%A0-homestay-%C4%91%E1%BA%B9p-v%C3%A0-n%E1%BB%95i-b%E1%BA%ADt-t%E1%BA%A1i-Hut-House-3-1.jpg',1),
+       ('https://kientrucsuvietnam.vn/wp-content/uploads/2021/12/mau-nha-homestay-dep.jpeg',1),
+       ('https://kientrucsuvietnam.vn/wp-content/uploads/2021/12/thiet-ke-homestay-nha-vuon-dep-1.jpeg',1),
+       ('https://xaydungthanhduc.com/wp-content/uploads/2021/06/mau-nha-homestay-dep-01.jpg',1),
+       ('https://ducthinhsteel.vn/uploaded/tin-tuc/mau-nha-go-homestay/nha-go-homestay-1.jpg',1),
+       ('https://angcovat.vn/imagesdata/TIN113118/cac-kieu-thiet-ke-homestay-ket-hop-nha-dan-dep.jpg',2),
+       ('https://agsevent.vn/wp-content/uploads/2022/04/Homestay-Dep-Phu-Quoc.jpg',2),
+       ('https://i.pinimg.com/736x/54/c6/c4/54c6c446b6730c9d0e3ed28b0bd08dcc.jpg',2),
+       ('https://tecwoodoutdoorfloor.com/upload/images/Blog/homestay-dep5.jpg',2),
+       ('https://charminghome.com.vn/wp-content/uploads/2018/01/Thi%E1%BA%BFt-K%E1%BA%BF-Homestay-L%C3%A0ng-Homestay-2.jpg',2),
+       ('https://charminghome.com.vn/wp-content/uploads/2018/01/Thi%E1%BA%BFt-K%E1%BA%BF-Homestay-L%C3%A0ng-Homestay-2.jpg',3),
+       ('https://thietkenhadepmoi.com/wp-content/uploads/2021/06/homestay-dep-2034.jpg',3),
+       ('https://huthouse.vn/wp-content/uploads/2021/12/%C4%90i%E1%BB%83m-danh-nh%E1%BB%AFng-m%E1%BA%ABu-nh%C3%A0-homestay-%C4%91%E1%BA%B9p-v%C3%A0-n%E1%BB%95i-b%E1%BA%ADt-t%E1%BA%A1i-Hut-House-1-1024x724.jpg',3),
+       ('https://ancu.me/images/201903/mau-nha-go-homestay-dep-khong-tuong/mau-nha-go-homestay-dep-khong-tuong.jpg?image_id=18916',3),
+       ('https://gochat.com.vn/wp-content/uploads/2020/05/nh%C3%A0-g%E1%BB%97-homestay-%C4%91%E1%BA%B9p-11.jpg',3),
+       ('https://nissei.vn/wp-content/uploads/2021/12/xay-bungalow-gia-re-9.jpg',4),
+       ('https://noithatduongdai.cdn.vccloud.vn/wp-content/uploads/2020/01/thiet-ke-homestay-don-gian-dep-hut-hon-moi-goc-nhin-1.jpeg',4),
+       ('https://ytuongnhadep.vn/Images/image/Thiet-ke-nha-go-homstay-dep-trong-cac-khu-du-lich-nghi-duong/Thiet-ke-nha-go-homstay-dep-trong-cac-khu-du-lich-nghi-duong-1.jpg',4),
+       ('https://www.tapdoantrananh.com.vn/uploads/files/2020/10/05/mau-nha-homestay-gia-re-0.jpg',4),
+       ('http://ngocbaoanh.com.vn/wp-content/uploads/2018/06/Homestay-%C4%91%E1%BA%B9p.jpg',4),
+       ('https://designvintage.vn/upload/product/nha-homestay-bungalow-9945.jpg',5),
+       ('https://noithattailocgialai.com/wp-content/uploads/2021/06/thi-cong-homestay-go-1.jpg',5),
+       ('http://kendecor.vn/upload/images/top-3-mau-nha-go-homestay-dep-danh-cho-ban.png',5),
+       ('https://ximanggiago.vn/wp-content/uploads/2022/05/nha-lap-ghep-homestay-1024x666.jpg',5),
+       ('https://thietkenhadepmoi.com/wp-content/uploads/2021/06/thiet-ke-homestay-dep-2025.jpg',5),
+       ('http://congtythietkenhadep.vn/wp-content/uploads/2021/02/Thiet-ke-homestay-la-gi-1.jpg',6),
+       ('https://motogo.vn/wp-content/uploads/2020/06/103309865_2474011049433063_496284865893103545_n-min.jpg',6),
+       ('https://huthouse.vn/wp-content/uploads/2021/12/%C4%90i%E1%BB%83m-danh-nh%E1%BB%AFng-m%E1%BA%ABu-nh%C3%A0-homestay-%C4%91%E1%BA%B9p-v%C3%A0-n%E1%BB%95i-b%E1%BA%ADt-t%E1%BA%A1i-Hut-House-2-1024x576.jpg',6),
+       ('https://xaydungthanhthinh.com/wp-content/uploads/2020/03/homestay-dep-an-tuong-2.jpg',6),
+       ('https://www.filethietke.vn/FilesUpload/CodeUpload/thiet-ke-homestay-tuyet-dep-gom-ban-ve-kien-truc-ket-cau-dien-nuoc-phoi-canh-su-144247.jpg',6),
+       ('http://nhagoxanh.com/img_data/images/mau-nha-go-homestay-dep-ngat-ngay.jpg',7),
+       ('https://xaydung.edu.vn/wp-content/uploads/thiet-ke-bungalow.jpg',7),
+       ('https://thietkenoithatatz.com/wp-content/uploads/2019/05/thiet-ke-noi-that-nha-o-homestay-10.jpg',7),
+       ('https://xaydungthanhduc.com/wp-content/uploads/2021/06/mau-nha-homestay-dep-05.jpg',7),
+       ('https://nhagodidong.net/wp-content/uploads/2019/11/nha-go-bungalow.png',7),
+       ('http://gspace.vn/web/media/images/2022/06/27/q1-rs650.jpg',8),
+       ('http://charminghome.com.vn/wp-content/uploads/2018/01/Thi%E1%BA%BFt-K%E1%BA%BF-Homestay-L%C3%A0ng-Homestay-5.jpg',8),
+       ('https://www.tapdoantrananh.com.vn/uploads/files/2020/10/02/mau-nha-homestay-dep-3.jpg',8),
+       ('https://designvintage.vn/thumb/445x345/2/upload/product/nha-bungalow-rustic-22.jpg',8),
+       ('https://kientrucsuvietnam.vn/wp-content/uploads/2021/12/thiet-ke-homestay-nha-vuon.jpg',8),
+       ('https://langtreviet.com/upload/user/images/nha-go-homestay-3.jpg',9),
+       ('https://ancu.me/images/201903/mau-thiet-ke-homestay-ba-vi-ha-noi-embossi-garden/mau-thiet-ke-homestay-ba-vi-ha-noi-embossi-garden.jpg?image_id=18891',9),
+       ('https://ytuongnhadep.vn/Images/image/Thiet-ke-nha-go-homstay-dep-trong-cac-khu-du-lich-nghi-duong/Thiet-ke-nha-go-homstay-dep-trong-cac-khu-du-lich-nghi-duong-2.jpg',9),
+       ('https://agsevent.vn/wp-content/uploads/2022/09/chi-phi-thiet-ke-homestay-3.jpg',9),
+       ('http://ongkien.vn/upload/baiviet/nhagolapghepchohomestay-472.jpg',9),
+       ('https://katahome.com/wp-content/uploads/2020/02/homestay-mai-la.jpg',10),
+       ('https://acchome.com.vn/wp-content/uploads/2022/02/nhung-mau-nha-go-homestay-dep-6.jpg',10),
+       ('https://nhagonamha.vn/upload/files/hinh_anh_mau_nha_go_homestay_1.jpg',10),
+       ('https://bdbcons.com/wp-content/uploads/nha-tien-che-homestay-1.jpg',10),
+       ('https://thietkenhadepmoi.com/wp-content/uploads/2021/06/homestay-dep-2033.jpg',10),
+       ('https://kientrucsuvietnam.vn/wp-content/uploads/2021/12/thiet-ke-homestay-nha-go-2.jpg',11),
+       ('https://quatest2.com.vn/wp-content/uploads/2021/04/mau-nha-homestay-la-gi.jpg',11),
+       ('https://nhadepshouse.com/hinh-anh/san-pham/thiet-ke-nha-go-bungalow-homestay-farmstay.jpg',11),
+       ('https://sp-ao.shortpixel.ai/client/q_glossy,ret_img,w_350/https://nhabungalow.com/wp-content/uploads/2021/02/thiet-ke-thi-cong-nha-bungalow-2-350x350.jpg',11),
+       ('https://angcovat.vn/imagesdata/TIN912020/bao-gia-thi-cong-homestay.jpg',11),
+       ('https://ancu.me/images/201903/homestay-don-gian-theo-phong-cach-truyen-thong/homestay-don-gian-theo-phong-cach-truyen-thong.jpg?image_id=18910',12),
+       ('https://trongoixaynha.com/wp-content/uploads/2021/12/xay-homestay-2.jpg',12),
+       ('https://dsdhome.vn/uploads/products/nha-lap-ghep-homestay3.png',12),
+       ('https://www.tapdoantrananh.com.vn/uploads/files/2020/10/05/mau-nha-homestay-gia-re-7.jpg',12),
+       ('https://adalhome.vn/wp-content/uploads/2021/10/choang-ngop-voi-nhung-mau-homestay-dep-an-tuong-6731-20.jpg',12),
+       ('https://ongkien.vn/upload/images/bungalows/nhago/nha-lap-ghep-triangle-4.jpg',13),
+       ('https://dsdhome.vn/uploads/products/nha-lap-ghep-homestay5.png',13),
+       ('https://designvintage.vn/thumb/445x345/2/upload/product/thi-cong-homestay-ba-ria-vung-tau-4071.jpg',13),
+       ('https://angcovat.vn/images/1-thiet-ke-homestay-2-tang-160m2.jpg',13),
+       ('https://thietkenhadepmoi.com/wp-content/uploads/2021/06/homestay-dep-2023.jpg',13),
+       ('https://thietkenhadepmoi.com/wp-content/uploads/2021/06/homestay-dep-2023.jpg',14),
+       ('http://nhagoxanh.com/img_data/images/nha-go-homestay-to-chim.jpg',14),
+       ('https://nhadepshouse.com/picture/file/thiet-ke-farmstay-tai-soc-son-ha-noi_(1).jpg',14),
+       ('https://quatest2.com.vn/wp-content/uploads/2021/04/thiet-ke-homestay-dep-moc-mac.jpg',14),
+       ('https://ancu.me/images/201903/mau-homestay-cho-cap-doi-dep-la-va-lang-man/mau-homestay-cho-cap-doi-dep-la-va-lang-man.jpg?image_id=18911',14),
+       ('https://adalhome.vn/wp-content/uploads/2021/10/choang-ngop-voi-nhung-mau-homestay-dep-an-tuong-6731-1.jpg',15),
+       ('https://trongoixaynha.com/wp-content/uploads/2021/12/xay-homestay-35.jpg',15),
+       ('http://cdn.houseviet.vn/images/news/21042022/132949723759009851.jpg',15),
+       ('https://agsevent.vn/wp-content/uploads/2022/09/mau-nha-homestay-gia-re-02.png',15),
+       ('https://kientrucauchau.vn/wp-content/uploads/2021/12/ban-ve-3D-thiet-ke-kien-truc-homestay.jpeg',15);
+
+
