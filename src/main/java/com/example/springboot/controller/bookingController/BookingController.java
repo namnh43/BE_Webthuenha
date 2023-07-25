@@ -9,10 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("booking")
 @CrossOrigin("*")
 public class BookingController {
     @Autowired
@@ -21,9 +22,5 @@ public class BookingController {
     private UserService userService;
 
     //List booking by User
-    @GetMapping("/list-booking")
-    public ResponseEntity<Iterable<Booking>> showListBookingByUser(@PathVariable Long userId){
-        Optional<User> user =userService.findById(userId);
-        return new ResponseEntity<>(bookingService.getListByUser(user), HttpStatus.OK);
-    }
+
 }

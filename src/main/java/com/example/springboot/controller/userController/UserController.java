@@ -2,9 +2,11 @@ package com.example.springboot.controller.userController;
 
 
 import com.example.springboot.dto.request.ChangePasswordRequest;
+import com.example.springboot.model.Booking;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 
+import com.example.springboot.service.bookingService.IBookingService;
 import com.example.springboot.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +31,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private IBookingService bookingService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,5 +79,10 @@ public class UserController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
         return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
+    }
+
+    @GetMapping("/booking/{userId}")
+    public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
+        return bookingService.getBookingsByUserId(userId);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,7 +64,7 @@ public class BookService implements IBookingService{
     }
 
     @Override
-    public Iterable<Booking> getListByUser(Optional<User> user) {
-        return bookingRepository.findByUser(user);
+    public List<Booking> getBookingsByUserId(Long userId) {
+        return bookingRepository.findByUserId(userId);
     }
 }
