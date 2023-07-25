@@ -16,6 +16,8 @@ public interface IHouseService extends IGeneralService<House> {
                                       @Param("address") String address,
                                       @Param("minPrice") double minPrice,
                                       @Param("maxPrice") double maxPrice);
-     void updateHouseStatus(Long id, HouseStatus status);
+     House updateHouseStatus(Long id, HouseStatus status);
+
+     House update(Long id, House user);
 
 }

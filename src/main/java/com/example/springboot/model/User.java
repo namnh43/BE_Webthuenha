@@ -1,13 +1,13 @@
 package com.example.springboot.model;
 
+import com.example.springboot.utils.Constants;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +47,8 @@ public class User implements UserDetails {
 
     private String profileImage;
 
-    private Date createAt;
+    @JsonFormat(pattern = Constants.DATETIME_FORMAT)
+    private Date createdAt;
 
     private boolean applyHost;
 
@@ -88,7 +89,7 @@ public class User implements UserDetails {
 
     @PrePersist
     public void setCreatedAt() {
-            this.createAt = new Date(new java.util.Date().getTime());
+        this.createdAt = new Date(new java.util.Date().getTime());
     }
 
 }

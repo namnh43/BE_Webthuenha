@@ -28,8 +28,9 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable().authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/jwt/**").permitAll()
-                                .requestMatchers("/house").permitAll()
-                                .requestMatchers("/house/{id}").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/houses").permitAll()
+                                .requestMatchers("/houses/{id}").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

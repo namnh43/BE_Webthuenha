@@ -32,15 +32,4 @@ public class ImageService implements IImageService {
     public void remove(Long id) {
         imageRepository.deleteById(id);
     }
-
-    @Override
-    public Iterable<Image> findByHouse(House house) {
-        return imageRepository.findByHouse(house);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAllByHouse(House house) {
-        imageRepository.deleteAllByHouse(house);
-    }
 }

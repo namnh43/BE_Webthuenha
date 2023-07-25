@@ -103,7 +103,7 @@ public class BookService implements IBookingService{
         }
 
         booking.setBookingStatus(BookingStatus.CANCELLED);
-        booking.setUpdateAt(currentDate);
+        booking.setUpdatedAt(currentDate);
         bookingRepository.save(booking);
     }
 

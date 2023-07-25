@@ -1,6 +1,5 @@
 package com.example.springboot.service.user;
 
-import com.example.springboot.dto.request.ChangePasswordRequest;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,6 +25,12 @@ public class UserServiceImpl implements UserService {
     private EmailService emailService;
     @Autowired
     private IHouseService houseService;
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Not found"));
+    }
+
     @Override
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
@@ -35,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllHosts() {
-        return userRepository.findAllByRole(Role.HOST);
+        return userRepository.findAllByRole(Role.ROLE_HOST);
     }
 
     public ResponseEntity<String> applyHost(String username) {
@@ -57,8 +61,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getRole().equals(Role.ADMIN)) return null;
-            user.setRole(Role.HOST);
+            if (user.getRole().equals(Role.ROLE_ADMIN)) return null;
+            user.setRole(Role.ROLE_HOST);
             user.setApplyHost(false);
             userRepository.save(user);
             String to = user.getEmail();
@@ -105,7 +109,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getRole().equals(Role.ADMIN)) return null;
+            if (user.getRole().equals(Role.ROLE_ADMIN)) return null;
             user.setBlocked(false);
             userRepository.save(user);
             String to = user.getEmail();
@@ -148,7 +152,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Map<String, Object>> getHostUsersWithHouseCount() {
-        List<User> hostUserList = userRepository.findHostUsers(Role.HOST);
+        List<User> hostUserList = userRepository.findHostUsers(Role.ROLE_HOST);
 
         List<Map<String, Object>> result = new ArrayList<>();
         for (User hostUser : hostUserList) {
@@ -166,12 +170,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getHostById(Long id) {
-        return userRepository.findByIdAndRole(id, Role.HOST);
+        return userRepository.findByIdAndRole(id, Role.ROLE_HOST);
     }
 
     @Override
     public User updateHostById(Long id, User user) {
-        User existingUser = userRepository.findByIdAndRole(id, Role.HOST);
+        User existingUser = userRepository.findByIdAndRole(id, Role.ROLE_HOST);
         if (existingUser != null) {
             existingUser.setEmail(user.getEmail());
             existingUser.setFirstName(user.getFirstName());

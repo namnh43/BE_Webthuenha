@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-import static com.example.springboot.model.BookingStatus.WAITING_FOR_CHECKIN;
+import static com.example.springboot.model.BookingStatus.BOOKING;
 
 @Data
 @Builder
@@ -31,17 +31,17 @@ public class Booking {
     private Date endDate;
     private Integer price;
     private Integer total;
-    private Date createAt;
-    private Date updateAt;
+    private Date createdAt;
+    private Date updatedAt;
     @OneToOne
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus = WAITING_FOR_CHECKIN;
+    private BookingStatus bookingStatus = BOOKING;
 
     @PrePersist
     public void setCreatedAt() {
-        this.createAt = new Date(new java.util.Date().getTime());
+        this.createdAt = new Date(new java.util.Date().getTime());
     }
 }

@@ -5,15 +5,12 @@ import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 import com.example.springboot.service.JwtService;
-import com.example.springboot.service.user.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -102,7 +99,7 @@ public class GoogleOAuth2Service {
                 newUser.setFirstName(givenName);
                 newUser.setLastName(familyName);
                 newUser.setAddress(locale);
-                newUser.setRole(Role.USER);
+                newUser.setRole(Role.ROLE_USER);
                 userRepository.save(newUser);
 
                 var response = jwtService.responseJWT(newUser);

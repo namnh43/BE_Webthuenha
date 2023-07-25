@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService extends IGeneralService<User> {
+    User findByUsername(String username);
+
     UserDetailsService userDetailsService();
 
     List<User> getAllHosts();
