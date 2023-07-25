@@ -1,7 +1,7 @@
 package com.example.springboot.service.bookingService;
 
-import com.example.springboot.Exception.NotFoundException;
-import com.example.springboot.Exception.UnauthorizedException;
+import com.example.springboot.exception.NotFoundException;
+import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.*;
 import com.example.springboot.repository.BookingRepository;
 import com.example.springboot.repository.HouseRepository;
