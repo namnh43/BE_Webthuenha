@@ -64,7 +64,7 @@ public class BookService implements IBookingService {
             if (
                     ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingSD.equals(bE.getEndDate()) || bookingSD.before(bE.getEndDate())))
                     || ((bookingED.equals(bE.getStartDate()) || bookingED.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.before(bE.getEndDate())))
-                    || ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.after(bE.getEndDate())))
+                    || ((bookingSD.equals(bE.getStartDate()) || bookingSD.before(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.after(bE.getEndDate())))
             ) return false;
         }
 
