@@ -27,7 +27,9 @@ public interface UserService extends IGeneralService<User> {
 
     User getHostById(Long id);
 
-    User updateHostById(Long id, User user);
+    User updateUser(User updatedUser);
 
     User unlockUser(Long id);
+
+    User getCurrentUser();
 }

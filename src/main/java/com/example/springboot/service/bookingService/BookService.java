@@ -6,6 +6,7 @@ import com.example.springboot.model.*;
 import com.example.springboot.repository.BookingRepository;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class BookService implements IBookingService{
+public class BookService implements IBookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
@@ -25,6 +26,9 @@ public class BookService implements IBookingService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public Iterable<Booking> findAll() {
@@ -47,24 +51,29 @@ public class BookService implements IBookingService{
     }
 
     @Override
-    public Booking createBooking(Long userId, Long houseId, Date startDate, Date endDate, Integer price, Integer total) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        House house = houseRepository.findById(houseId).orElseThrow(() -> new RuntimeException("House not found"));
+    public boolean createBooking(Booking booking) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> currentUserOptional = userRepository.findByUsername(username);
 
-        Booking booking = Booking.builder()
-                .user(user)
-                .house(house)
-                .startDate(startDate)
-                .endDate(endDate)
-                .price(price)
-                .total(total)
-                .bookingStatus(BookingStatus.BOOKING)
-                .build();
+        List<Booking> bookingListOfHouse = findAllByHouse(booking.getHouse());
 
-        house.setHouseStatus(HouseStatus.IN_BOOKING);
-        houseRepository.save(house);
+        Date inputBookingStartDate = booking.getStartDate();
+        Date inputbookingEndDate = booking.getEndDate();
 
-        return bookingRepository.save(booking);
+        for (var bookingElement : bookingListOfHouse) {
+            Date bokkingElementStartDate = bookingElement.getStartDate();
+            Date bookingElementEndDate = bookingElement.getEndDate();
+
+            if (
+                    (inputBookingStartDate.compareTo(bokkingElementStartDate) >= 0 && inputBookingStartDate.compareTo(bookingElementEndDate) <= 0)
+                            || (inputbookingEndDate.compareTo(bokkingElementStartDate) >= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) <= 0)
+                            || (inputBookingStartDate.compareTo(bokkingElementStartDate) <= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) >= 0)
+            ) return false;
+        }
+
+        booking.setUser(currentUserOptional.get());
+        bookingRepository.save(booking);
+        return true;
     }
 
     @Override
@@ -82,15 +91,7 @@ public class BookService implements IBookingService{
 
         Booking booking = bookingOptional.get();
         User user = booking.getUser();
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> currentUserOptional = userRepository.findByUsername(username);
-
-        if (currentUserOptional.isEmpty()) {
-            throw new NotFoundException("User not found");
-        }
-
-        User currentUser = currentUserOptional.get();
+        User currentUser = userService.getCurrentUser();
         if (!currentUser.equals(user)) {
             throw new UnauthorizedException("You are not authorized to cancel this booking");
         }
@@ -108,4 +109,7 @@ public class BookService implements IBookingService{
         bookingRepository.save(booking);
     }
 
+    public List<Booking> findAllByHouse(House house) {
+        return bookingRepository.findByHouse(house);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.springboot.repository;
 
 import com.example.springboot.model.Booking;
 import com.example.springboot.model.BookingStatus;
+import com.example.springboot.model.House;
 import com.example.springboot.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,7 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByUser(User user);
+
+    List<Booking> findByHouse(House house);
 
 }

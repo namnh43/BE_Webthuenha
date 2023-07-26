@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+import static com.example.springboot.model.BookingStatus.BOOKING;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -36,7 +38,7 @@ public class Booking {
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus = BookingStatus.BOOKING;
+    private BookingStatus bookingStatus = BOOKING;
 
     @PrePersist
     public void setCreatedAt() {

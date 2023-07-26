@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("booking")
 @CrossOrigin("*")
@@ -18,10 +20,18 @@ public class BookingController {
     private IBookingService bookingService;
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public ResponseEntity<List<Booking>> getAllBooking() {
+        return new ResponseEntity<>((List<Booking>) bookingService.findAll(), HttpStatus.OK);
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<Booking> create(@RequestBody Booking booking){
+    public ResponseEntity<Booking> create(@RequestBody Booking booking) {
+        boolean isSuccessfullyCreated = bookingService.createBooking(booking);
         System.out.println(booking);
-        return new ResponseEntity<>(bookingService.save(booking),HttpStatus.OK);
+        if (isSuccessfullyCreated) return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("cancel/{bookingId}")
