@@ -2,12 +2,15 @@ package com.example.springboot.controller.bookingController;
 
 import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.exception.UnauthorizedException;
+import com.example.springboot.model.Booking;
 import com.example.springboot.service.bookingService.IBookingService;
 import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("booking")
@@ -17,10 +20,18 @@ public class BookingController {
     private IBookingService bookingService;
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public ResponseEntity<List<Booking>> getAllBooking() {
+        return new ResponseEntity<>((List<Booking>) bookingService.findAll(), HttpStatus.OK);
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<Booking> create(@RequestBody Booking booking){
+    public ResponseEntity<Booking> create(@RequestBody Booking booking) {
+        boolean isSuccessfullyCreated = bookingService.createBooking(booking);
         System.out.println(booking);
-        return new ResponseEntity<>(bookingService.save(booking),HttpStatus.OK);
+        if (isSuccessfullyCreated) return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("cancel/{bookingId}")

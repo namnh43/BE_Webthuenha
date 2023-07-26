@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface IBookingService extends IGeneralService<Booking> {
 
-    Booking createBooking(Long userId, Long houseId, Date startDate, Date endDate, Integer price, Integer total);
+    boolean createBooking(Booking booking);
 
     List<Booking> getBookingsByUser(User user);
     void cancelBookingForUser(Long bookingId);

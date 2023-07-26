@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class BookService implements IBookingService{
+public class BookService implements IBookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
@@ -47,24 +47,26 @@ public class BookService implements IBookingService{
     }
 
     @Override
-    public Booking createBooking(Long userId, Long houseId, Date startDate, Date endDate, Integer price, Integer total) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        House house = houseRepository.findById(houseId).orElseThrow(() -> new RuntimeException("House not found"));
+    public boolean createBooking(Booking booking) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> currentUserOptional = userRepository.findByUsername(username);
 
-        Booking booking = Booking.builder()
-                .user(user)
-                .house(house)
-                .startDate(startDate)
-                .endDate(endDate)
-                .price(price)
-                .total(total)
-                .bookingStatus(BookingStatus.BOOKING)
-                .build();
+        List<Booking> bookingListOfHouse = findAllByHouse(booking.getHouse());
 
-        house.setHouseStatus(HouseStatus.IN_BOOKING);
-        houseRepository.save(house);
+        Date bookingSD = booking.getStartDate();
+        Date bookingED = booking.getEndDate();
 
-        return bookingRepository.save(booking);
+        for (var bE : bookingListOfHouse) {
+            if (
+                    ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingSD.equals(bE.getEndDate()) || bookingSD.before(bE.getEndDate())))
+                    || ((bookingED.equals(bE.getStartDate()) || bookingED.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.before(bE.getEndDate())))
+                    || ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.after(bE.getEndDate())))
+            ) return false;
+        }
+
+        booking.setUser(currentUserOptional.get());
+        bookingRepository.save(booking);
+        return true;
     }
 
     @Override
@@ -107,4 +109,7 @@ public class BookService implements IBookingService{
         bookingRepository.save(booking);
     }
 
+    public List<Booking> findAllByHouse(House house) {
+        return bookingRepository.findByHouse(house);
+    }
 }
