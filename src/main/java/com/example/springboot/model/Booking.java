@@ -10,7 +10,6 @@ import java.sql.Date;
 
 import static com.example.springboot.model.BookingStatus.BOOKING;
 
-
 @Data
 @Builder
 @NoArgsConstructor
