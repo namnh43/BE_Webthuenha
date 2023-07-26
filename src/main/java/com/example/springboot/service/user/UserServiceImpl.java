@@ -1,6 +1,7 @@
 package com.example.springboot.service.user;
 
 import com.example.springboot.dto.request.ChangePasswordRequest;
+import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -170,18 +172,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateHostById(Long id, User user) {
-        User existingUser = userRepository.findByIdAndRole(id, Role.HOST);
-        if (existingUser != null) {
-            existingUser.setEmail(user.getEmail());
-            existingUser.setFirstName(user.getFirstName());
-            existingUser.setLastName(user.getLastName());
-            existingUser.setPhoneNumber(user.getPhoneNumber());
-            existingUser.setAddress(user.getAddress());
-            existingUser.setProfileImage(user.getProfileImage());
-            // cập nhật các thông tin khác của người dùng
-            return userRepository.save(existingUser);
+    public User updateUser(User updatedUser) {
+        User currentUser = getCurrentUser();
+        if (updatedUser.getFirstName() != null) {
+            currentUser.setFirstName(updatedUser.getFirstName());
         }
-        return null;
+        if (updatedUser.getLastName() != null) {
+            currentUser.setLastName(updatedUser.getLastName());
+        }
+        if (updatedUser.getEmail() != null) {
+            currentUser.setEmail(updatedUser.getEmail());
+        }
+        if (updatedUser.getPhoneNumber() != null) {
+            currentUser.setPhoneNumber(updatedUser.getPhoneNumber());
+        }
+        if (updatedUser.getAddress() != null) {
+            currentUser.setAddress(updatedUser.getAddress());
+        }
+        if (updatedUser.getProfileImage() != null) {
+            currentUser.setProfileImage(updatedUser.getProfileImage());
+        }
+        return userRepository.save(currentUser);
     }
+
+    @Override
+    public User getCurrentUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> currentUserOptional = userRepository.findByUsername(username);
+
+        if (currentUserOptional.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        return currentUserOptional.get();
+    }
+
 }

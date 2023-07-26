@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
     @Autowired
     private IBookingService bookingService;
-    @Autowired
-    private UserService userService;
+
     @PostMapping("/create")
     public ResponseEntity<Booking> create(@RequestBody Booking booking){
         System.out.println(booking);

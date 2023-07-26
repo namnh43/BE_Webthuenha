@@ -76,10 +76,12 @@ public class UserController {
         return ResponseEntity.ok("Password changed successfully");
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
+    @PutMapping("/current")
+    public ResponseEntity<User> updateCurrentUser(@RequestBody User updatedUser) {
+        User currentUser = userService.updateUser(updatedUser);
+        return ResponseEntity.ok(currentUser);
     }
+
 
     @GetMapping("/list-booking")
     public ResponseEntity<List<Booking>> getBookingsByUser() {
@@ -91,4 +93,5 @@ public class UserController {
         User user = userOptional.get();
         return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
     }
+
 }
