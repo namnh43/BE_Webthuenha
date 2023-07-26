@@ -82,6 +82,7 @@ public class BookService implements IBookingService{
 
         Booking booking = bookingOptional.get();
         User user = booking.getUser();
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> currentUserOptional = userRepository.findByUsername(username);
 
