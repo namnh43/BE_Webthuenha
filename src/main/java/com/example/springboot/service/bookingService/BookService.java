@@ -6,6 +6,7 @@ import com.example.springboot.model.*;
 import com.example.springboot.repository.BookingRepository;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class BookService implements IBookingService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public Iterable<Booking> findAll() {
@@ -84,14 +88,7 @@ public class BookService implements IBookingService {
 
         Booking booking = bookingOptional.get();
         User user = booking.getUser();
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> currentUserOptional = userRepository.findByUsername(username);
-
-        if (currentUserOptional.isEmpty()) {
-            throw new NotFoundException("User not found");
-        }
-
-        User currentUser = currentUserOptional.get();
+        User currentUser = userService.getCurrentUser();
         if (!currentUser.equals(user)) {
             throw new UnauthorizedException("You are not authorized to cancel this booking");
         }
