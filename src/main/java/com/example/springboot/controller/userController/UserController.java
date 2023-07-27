@@ -60,14 +60,14 @@ public class UserController {
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            return ResponseEntity.status(HttpStatus.OK).body("User not found");
 
         User user = userOptional.get();
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid current password");
+            return ResponseEntity.status(HttpStatus.OK).body("Invalid current password");
 
         if (passwordEncoder.matches(request.getNewPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password must be different from the current password");
+            return ResponseEntity.status(HttpStatus.OK).body("New password must be different from the current password");
 
         String newPasswordEncoded = passwordEncoder.encode(request.getNewPassword());
         user.setPassword(newPasswordEncoded);
