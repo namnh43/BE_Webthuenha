@@ -1,5 +1,6 @@
 package com.example.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,8 @@ public class House {
     private Integer price;
     private String description;
     private String featuredImage;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -42,9 +45,9 @@ public class House {
     @OneToMany(mappedBy = "house")
     private List<Review> reviews;
 
-
     @PrePersist
     public void setCreatedAt() {
         this.createAt = new Date(new java.util.Date().getTime());
+        this.featuredImage = "https://a0.muscache.com/im/pictures/miso/Hosting-813137457313942137/original/34eaa638-9027-4e9a-9e91-239db6f2e844.jpeg?im_w=720";
     }
 }
