@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -104,5 +105,11 @@ public class HouseController {
     public ResponseEntity<Void> updateHouseStatus(@PathVariable Long id, @RequestParam HouseStatus status) {
         houseService.updateHouseStatus(id, status);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search/host")
+    public ResponseEntity<List<House>> getHousesByCurrentUser(@Param("name") String name,
+                                                              @Param("status") HouseStatus status) {
+        return new ResponseEntity<>(houseService.findHousesByNameAndStatus(name, status),HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.springboot.repository;
 
 import com.example.springboot.model.House;
+import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +14,10 @@ import java.util.Optional;
 @Repository
 public interface HouseRepository extends JpaRepository<House,Long> {
      Iterable<House> findByUser(User user);
+
      @Query("SELECT COUNT(h) FROM House h WHERE h.user.id = :userId")
      Long countByUserId(@Param("userId") Long userId);
+
      @Query(value = "SELECT * FROM houses WHERE " +
              "CASE WHEN :totalBedrooms = 0 THEN true ELSE total_bedrooms = :totalBedrooms END = true " +
              "AND CASE WHEN :totalBathrooms = 0 THEN true ELSE total_bathrooms = :totalBathrooms END = true  " +
@@ -27,4 +30,7 @@ public interface HouseRepository extends JpaRepository<House,Long> {
                                       @Param("maxPrice") Double maxPrice);
 
      Optional<House> findByName(String name);
+
+     @Query("SELECT h FROM House h WHERE h.user = :user AND h.name LIKE CONCAT('%',:name,'%') AND h.houseStatus = :houseStatus")
+     List<House> findHousesByUserAndNameAndStatus(User user, String name, HouseStatus houseStatus);
 }
