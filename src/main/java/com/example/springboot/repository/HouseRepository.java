@@ -20,8 +20,8 @@ public interface HouseRepository extends JpaRepository<House,Long> {
      Long countByUserId(@Param("userId") Long userId);
 
      @Query(value = "SELECT * FROM houses h WHERE " +
-             "(:totalBedrooms = 0 OR h.total_bedrooms = :totalBedrooms) " +
-             "AND (:totalBathrooms = 0 OR h.total_bathrooms = :totalBathrooms) " +
+             "CASE WHEN :totalBedrooms = 0 THEN true ELSE h.total_bedrooms = :totalBedrooms END = true " +
+             "AND CASE WHEN :totalBathrooms = 0 THEN true ELSE h.total_bathrooms = :totalBathrooms END = true " +
              "AND h.address LIKE %:address% " +
              "AND h.price >= :minPrice AND h.price <= :maxPrice " +
              "AND h.house_status = 'EMPTY' " +
