@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +58,14 @@ public class HouseService implements IHouseService {
     }
 
     @Override
-    public List<House> findBySearchCriteria(int totalBedrooms, int totalBathrooms, String address, double minPrice, double maxPrice) {
-        return houseRepository.findBySearchCriteria(totalBedrooms,totalBathrooms,address,minPrice,maxPrice);
+    public List<House> findBySearchCriteriaAndTimeRange(int totalBedrooms,
+                                            int totalBathrooms,
+                                            String address,
+                                            double minPrice,
+                                            double maxPrice,
+                                            Date startDate,
+                                            Date endDate) {
+        return houseRepository.findBySearchCriteriaAndTimeRange(totalBedrooms,totalBathrooms,address,minPrice,maxPrice,startDate,endDate);
     }
 
     @Override

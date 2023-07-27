@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,17 +19,21 @@ public interface HouseRepository extends JpaRepository<House,Long> {
      @Query("SELECT COUNT(h) FROM House h WHERE h.user.id = :userId")
      Long countByUserId(@Param("userId") Long userId);
 
-     @Query(value = "SELECT * FROM houses WHERE " +
-             "CASE WHEN :totalBedrooms = 0 THEN true ELSE total_bedrooms = :totalBedrooms END = true " +
-             "AND CASE WHEN :totalBathrooms = 0 THEN true ELSE total_bathrooms = :totalBathrooms END = true  " +
-             "AND address LIKE %:address% " +
-             "AND price >= :minPrice AND price <= :maxPrice", nativeQuery = true)
-     List<House> findBySearchCriteria(@Param("totalBedrooms") Integer totalBedrooms,
-                                      @Param("totalBathrooms") Integer totalBathrooms,
-                                      @Param("address") String address,
-                                      @Param("minPrice") Double minPrice,
-                                      @Param("maxPrice") Double maxPrice);
-
+     @Query(value = "SELECT * FROM houses h WHERE " +
+             "(:totalBedrooms = 0 OR h.total_bedrooms = :totalBedrooms) " +
+             "AND (:totalBathrooms = 0 OR h.total_bathrooms = :totalBathrooms) " +
+             "AND h.address LIKE %:address% " +
+             "AND h.price >= :minPrice AND h.price <= :maxPrice " +
+             "AND h.house_status = 'EMPTY' " +
+             "AND NOT EXISTS (SELECT * FROM bookings b WHERE b.house_id = h.id AND ((:startDate BETWEEN b.start_date AND b.end_date) OR (:endDate BETWEEN b.start_date AND b.end_date) OR (b.start_date BETWEEN :startDate AND :endDate)))",
+             nativeQuery = true)
+     List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") Integer totalBedrooms,
+                                                  @Param("totalBathrooms") Integer totalBathrooms,
+                                                  @Param("address") String address,
+                                                  @Param("minPrice") Double minPrice,
+                                                  @Param("maxPrice") Double maxPrice,
+                                                  @Param("startDate") Date startDate,
+                                                  @Param("endDate") Date endDate);
      Optional<House> findByName(String name);
 
      @Query("SELECT h FROM House h WHERE h.user = :user AND h.name LIKE CONCAT('%',:name,'%') AND h.houseStatus = :houseStatus")
