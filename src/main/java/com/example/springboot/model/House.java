@@ -1,5 +1,6 @@
 package com.example.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,8 @@ public class House {
     private Integer price;
     private String description;
     private String featuredImage;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

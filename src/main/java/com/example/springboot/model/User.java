@@ -1,5 +1,6 @@
 package com.example.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String firstName;
