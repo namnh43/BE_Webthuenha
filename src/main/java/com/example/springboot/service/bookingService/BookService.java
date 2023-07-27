@@ -57,14 +57,17 @@ public class BookService implements IBookingService {
 
         List<Booking> bookingListOfHouse = findAllByHouse(booking.getHouse());
 
-        Date bookingSD = booking.getStartDate();
-        Date bookingED = booking.getEndDate();
+        Date inputBookingStartDate = booking.getStartDate();
+        Date inputbookingEndDate = booking.getEndDate();
 
-        for (var bE : bookingListOfHouse) {
+        for (var bookingElement : bookingListOfHouse) {
+            Date bokkingElementStartDate = bookingElement.getStartDate();
+            Date bookingElementEndDate = bookingElement.getEndDate();
+
             if (
-                    ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingSD.equals(bE.getEndDate()) || bookingSD.before(bE.getEndDate())))
-                    || ((bookingED.equals(bE.getStartDate()) || bookingED.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.before(bE.getEndDate())))
-                    || ((bookingSD.equals(bE.getStartDate()) || bookingSD.after(bE.getStartDate())) && (bookingED.equals(bE.getEndDate()) || bookingED.after(bE.getEndDate())))
+                    (inputBookingStartDate.compareTo(bokkingElementStartDate) >= 0 && inputBookingStartDate.compareTo(bookingElementEndDate) <= 0)
+                            || (inputbookingEndDate.compareTo(bokkingElementStartDate) >= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) <= 0)
+                            || (inputBookingStartDate.compareTo(bokkingElementStartDate) <= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) >= 0)
             ) return false;
         }
 
