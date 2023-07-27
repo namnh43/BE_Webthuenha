@@ -56,6 +56,7 @@ public class UserController {
     //@Bean PasswordEncoder sẽ bị gọi thành vòng lặp nếu đặt trong userService nên tạm thời viết luôn ở controller
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+<<<<<<< HEAD
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> userOptional = userRepository.findByUsername(username);
 
@@ -63,6 +64,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("User not found");
 
         User user = userOptional.get();
+=======
+        User user = userService.getCurrentUser();
+>>>>>>> 8925093a794cf586beb701c6b34a1d5e895956ce
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword()))
             return ResponseEntity.status(HttpStatus.OK).body("Invalid current password");
 
@@ -85,12 +89,7 @@ public class UserController {
 
     @GetMapping("/list-booking")
     public ResponseEntity<List<Booking>> getBookingsByUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isEmpty())
-             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        User user = userOptional.get();
+        User user = userService.getCurrentUser();
         return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
     }
 
