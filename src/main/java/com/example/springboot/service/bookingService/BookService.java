@@ -6,15 +6,18 @@ import com.example.springboot.model.*;
 import com.example.springboot.repository.BookingRepository;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.house.HouseService;
 import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService implements IBookingService {
@@ -22,7 +25,7 @@ public class BookService implements IBookingService {
     private BookingRepository bookingRepository;
 
     @Autowired
-    private HouseRepository houseRepository;
+    private HouseService houseService;
 
     @Autowired
     private UserRepository userRepository;
@@ -111,5 +114,19 @@ public class BookService implements IBookingService {
 
     public List<Booking> findAllByHouse(House house) {
         return bookingRepository.findByHouse(house);
+    }
+
+    public List<Booking> findAllByOwner(User user) {
+        List<House> houseList = (List<House>) houseService.findByUser(user);
+        List<Booking> bookingList = new ArrayList<>();
+
+        for (var house: houseList) {
+            List<Booking> bookingInHouse = findAllByHouse(house);
+            bookingList.addAll(bookingInHouse);
+        }
+
+        return bookingList.stream()
+                .sorted((b1, b2) -> b2.getId().compareTo(b1.getId()))
+                .collect(Collectors.toList());
     }
 }
