@@ -29,7 +29,6 @@ public class House {
     private String description;
     private String featuredImage;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
