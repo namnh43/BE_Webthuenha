@@ -26,7 +26,7 @@ public class House {
     private Integer totalBathrooms;
     private String address;
     private Integer price;
-    private String description;
+        private String description;
     private String featuredImage;
 
     @JsonIgnore

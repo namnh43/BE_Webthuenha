@@ -29,6 +29,10 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @PrePersist
     public void setCreatedAt() {
