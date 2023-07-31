@@ -1,7 +1,6 @@
 package com.example.springboot.service.house;
 
 import com.example.springboot.model.House;
-import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
 import com.example.springboot.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +19,6 @@ public interface IHouseService extends IGeneralService<House> {
                                       @Param("maxPrice") double maxPrice,
                                       @Param("startDate") Date startDate,
                                       @Param("endDate") Date endDate);
-     void updateHouseStatus(Long id, HouseStatus status);
-     List<House> findHousesByNameAndStatus(String name, HouseStatus status);
+
 
 }

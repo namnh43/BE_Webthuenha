@@ -50,9 +50,4 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
-    @GetMapping("list-booking")
-    public ResponseEntity<List<Booking>> getBookingByHouse(){
-        return new ResponseEntity<>(bookingService.getBookingListForCurrentUser(),HttpStatus.OK);
-    }
 }
