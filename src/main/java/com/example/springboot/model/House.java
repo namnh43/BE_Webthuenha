@@ -22,10 +22,15 @@ public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private Integer totalBedrooms;
+
     private Integer totalBathrooms;
+
     private String address;
+
     private Double price;
 
     @Column(columnDefinition = "TEXT")
@@ -36,19 +41,20 @@ public class House {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
     private Date createdAt;
 
-//    @Formula("(SELECT AVG(r.rating) FROM reviews r WHERE r.house_id = id)")
-//    private Double ratingScore;
-//
-//    @Formula("(SELECT COUNT(*) FROM reviews r WHERE r.house_id = id)")
-//    private Long numberOfReviews;
-//
-//    @Formula("(SELECT COUNT(*) FROM bookings b WHERE b.house_id = id AND (b.booking_status = 'CHECKED_OUT'))")
-//    private Long numberOfRented;
+    @Formula("(SELECT AVG(r.rating) FROM reviews r WHERE r.house_id = id)")
+    private Double ratingScore;
 
-    @Enumerated(EnumType.STRING)
-    private HouseStatus houseStatus = HouseStatus.EMPTY;
+    @Formula("(SELECT COUNT(*) FROM reviews r WHERE r.house_id = id)")
+    private Integer numberOfReviews;
+
+    @Formula("(SELECT COUNT(*) FROM bookings b WHERE b.house_id = id AND (b.booking_status = 'CHECKED_OUT'))")
+    private Integer numberOfRented;
+
+    @Formula("(SELECT b.booking_status FROM bookings b WHERE b.house_id = id AND CURRENT_DATE BETWEEN b.start_date AND b.end_date LIMIT 1)")
+    private String houseStatus;
 
     @OneToMany(mappedBy = "house")
     private List<Image> images;

@@ -3,7 +3,6 @@ package com.example.springboot.service.house;
 import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.model.BookingStatus;
 import com.example.springboot.model.House;
-import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.UserRepository;
@@ -68,25 +67,5 @@ public class HouseService implements IHouseService {
                                             Date endDate) {
         return houseRepository.findBySearchCriteriaAndTimeRange(totalBedrooms,totalBathrooms,address,minPrice,maxPrice,startDate,endDate);
     }
-
-    @Override
-    public void updateHouseStatus(Long id, HouseStatus status) {
-        Optional<House> optionalHouse = houseRepository.findById(id);
-        if (optionalHouse.isPresent()) {
-            House house = optionalHouse.get();
-            house.setHouseStatus(status);
-            houseRepository.save(house);
-        }
-    }
-
-    @Override
-    public List<House> findHousesByNameAndStatus(String name, HouseStatus status) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> currentUserOptional = userRepository.findByUsername(username);
-
-        User currentUser = currentUserOptional.get();
-        return houseRepository.findHousesByUserAndNameAndStatus(currentUser, name, status);
-    }
-
 
 }
