@@ -4,6 +4,7 @@ import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
 import com.example.springboot.model.House;
+import com.example.springboot.model.User;
 import com.example.springboot.service.bookingService.IBookingService;
 import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,32 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    @GetMapping("/owner")
+    public ResponseEntity<List<Booking>> findBookingByOwner() {
+        User currentUser = userService.getCurrentUser();
+        try {
+            List<Booking> bookingList = bookingService.findAllByOwner(currentUser);
+            return new ResponseEntity<>(bookingList, HttpStatus.OK);
+        }catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/maintenance-to-empty/{bookingId}")
+    public ResponseEntity<HttpStatus> cancelMaintenance(@PathVariable Long bookingId) {
+        try {
+            bookingService.remove(bookingId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+//    @PostMapping("/check-in/{bookingId}")
+//    public ResponseEntity<Booking> checkIn (@PathVariable Long bookingId) {
+//
+//    }
 
     @PutMapping("/check-in/{id}")
     public void checkInBooking(@PathVariable Long id) {
