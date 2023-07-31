@@ -14,8 +14,6 @@ public interface IBookingService extends IGeneralService<Booking> {
 
     List<Booking> getBookingsByUser(User user);
     void cancelBookingForUser(Long bookingId);
-    List<Booking> getBookingListForCurrentUser();
-
     void checkInBooking(Long id);
     void checkOutBooking(Long id);
 }

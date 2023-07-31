@@ -52,11 +52,6 @@ public class BookingController {
         }
     }
 
-    @GetMapping("list-booking")
-    public ResponseEntity<List<Booking>> getBookingByHouse(){
-        return new ResponseEntity<>(bookingService.getBookingListForCurrentUser(),HttpStatus.OK);
-    }
-
     @PutMapping("/check-in/{id}")
     public void checkInBooking(@PathVariable Long id) {
         bookingService.checkInBooking(id);
