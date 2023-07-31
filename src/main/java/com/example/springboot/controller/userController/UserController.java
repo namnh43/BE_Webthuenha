@@ -56,18 +56,12 @@ public class UserController {
     //@Bean PasswordEncoder sẽ bị gọi thành vòng lặp nếu đặt trong userService nên tạm thời viết luôn ở controller
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-
-        User user = userOptional.get();
+        User user = userService.getCurrentUser();
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid current password");
+            return ResponseEntity.status(HttpStatus.OK).body("Invalid current password");
 
         if (passwordEncoder.matches(request.getNewPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password must be different from the current password");
+            return ResponseEntity.status(HttpStatus.OK).body("New password must be different from the current password");
 
         String newPasswordEncoded = passwordEncoder.encode(request.getNewPassword());
         user.setPassword(newPasswordEncoded);
@@ -85,12 +79,7 @@ public class UserController {
 
     @GetMapping("/list-booking")
     public ResponseEntity<List<Booking>> getBookingsByUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isEmpty())
-             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        User user = userOptional.get();
+        User user = userService.getCurrentUser();
         return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
     }
 

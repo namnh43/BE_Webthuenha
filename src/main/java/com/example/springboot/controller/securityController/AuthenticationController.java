@@ -3,6 +3,7 @@ package com.example.springboot.controller.securityController;
 import com.example.springboot.configuration.JwtAuthenticationFilter;
 import com.example.springboot.dto.request.SignInRequest;
 import com.example.springboot.dto.request.SignUpRequest;
+import com.example.springboot.dto.response.ApiResponse;
 import com.example.springboot.dto.response.JwtAuthenticationResponse;
 import com.example.springboot.service.AuthenticationService;
 import com.example.springboot.service.googleOAuth2.GoogleOAuth2Service;
@@ -21,7 +22,7 @@ public class AuthenticationController {
     private final GoogleOAuth2Service googleOAuth2Service;
 
     @PostMapping("/signup")
-    public ResponseEntity<JwtAuthenticationResponse> signup(@Valid @RequestBody SignUpRequest request) {
+    public ResponseEntity<ApiResponse> signup(@Valid @RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signup(request));
     }
 

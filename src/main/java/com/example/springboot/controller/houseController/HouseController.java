@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -96,13 +98,21 @@ public class HouseController {
                                                         @Param("totalBathrooms") int totalBathrooms,
                                                         @Param("address") String address,
                                                         @Param("minPrice") double minPrice,
-                                                        @Param("maxPrice") double maxPrice) {
-        return new ResponseEntity<>(houseService.findBySearchCriteria(totalBedrooms, totalBathrooms, address, minPrice, maxPrice), HttpStatus.OK);
+                                                        @Param("maxPrice") double maxPrice,
+                                                        @Param("startDate") Date startDate,
+                                                        @Param("endDate") Date endDate) {
+        return new ResponseEntity<>(houseService.findBySearchCriteriaAndTimeRange(totalBedrooms, totalBathrooms, address, minPrice, maxPrice,startDate,endDate), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<Void> updateHouseStatus(@PathVariable Long id, @RequestParam HouseStatus status) {
         houseService.updateHouseStatus(id, status);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search/host")
+    public ResponseEntity<List<House>> getHousesByCurrentUser(@Param("name") String name,
+                                                              @Param("status") HouseStatus status) {
+        return new ResponseEntity<>(houseService.findHousesByNameAndStatus(name, status),HttpStatus.OK);
     }
 }
