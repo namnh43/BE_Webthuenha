@@ -38,14 +38,14 @@ public class House {
     private User user;
     private Date createdAt;
 
-    @Formula("(SELECT AVG(r.rating) FROM reviews r WHERE r.house_id = id)")
-    private Double ratingScore;
-
-    @Formula("(SELECT COUNT(*) FROM reviews r WHERE r.house_id = id)")
-    private Long numberOfReviews;
-
-    @Formula("(SELECT COUNT(*) FROM bookings b WHERE b.house_id = id AND (b.booking_status = 'CHECKED_OUT'))")
-    private Long numberOfRented;
+//    @Formula("(SELECT AVG(r.rating) FROM reviews r WHERE r.house_id = id)")
+//    private Double ratingScore;
+//
+//    @Formula("(SELECT COUNT(*) FROM reviews r WHERE r.house_id = id)")
+//    private Long numberOfReviews;
+//
+//    @Formula("(SELECT COUNT(*) FROM bookings b WHERE b.house_id = id AND (b.booking_status = 'CHECKED_OUT'))")
+//    private Long numberOfRented;
 
     @Enumerated(EnumType.STRING)
     private HouseStatus houseStatus = HouseStatus.EMPTY;

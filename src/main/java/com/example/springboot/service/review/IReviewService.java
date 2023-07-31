@@ -3,6 +3,8 @@ package com.example.springboot.service.review;
 import com.example.springboot.model.Review;
 import com.example.springboot.service.IGeneralService;
 
-public interface IReviewService extends IGeneralService<Review> {
+import java.util.List;
 
+public interface IReviewService extends IGeneralService<Review> {
+    List<Review> getReviewByHouseId(Long id);
 }
