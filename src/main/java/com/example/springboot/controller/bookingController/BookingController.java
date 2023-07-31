@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("booking")
@@ -55,4 +56,15 @@ public class BookingController {
     public ResponseEntity<List<Booking>> getBookingByHouse(){
         return new ResponseEntity<>(bookingService.getBookingListForCurrentUser(),HttpStatus.OK);
     }
+
+    @PutMapping("/check-in/{id}")
+    public void checkInBooking(@PathVariable Long id) {
+        bookingService.checkInBooking(id);
+    }
+
+    @PutMapping("/check-out/{id}")
+    public void checkOutBooking(@PathVariable Long id) {
+        bookingService.checkOutBooking(id);
+    }
+
 }

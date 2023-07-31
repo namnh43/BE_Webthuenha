@@ -124,4 +124,27 @@ public class BookService implements IBookingService {
         User currentUser = currentUserOptional.get();
         return bookingRepository.findByUserAndBookingStatus(currentUser, BookingStatus.BOOKING);
     }
+
+    @Override
+    public void checkInBooking(Long id) {
+        Optional<Booking> optionalBooking = bookingRepository.findById(id);
+        if (optionalBooking.isPresent()) {
+            Booking booking = optionalBooking.get();
+            booking.setBookingStatus(BookingStatus.CHECKED_IN);
+            bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("Booking not found with id " + id);
+        }
+    }
+    @Override
+    public void checkOutBooking(Long id) {
+        Optional<Booking> optionalBooking = bookingRepository.findById(id);
+        if (optionalBooking.isPresent()) {
+            Booking booking = optionalBooking.get();
+            booking.setBookingStatus(BookingStatus.CHECKED_OUT);
+            bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("Booking not found with id " + id);
+        }
+    }
 }
