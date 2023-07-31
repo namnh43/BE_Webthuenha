@@ -1,5 +1,6 @@
 package com.example.springboot.repository;
 
+import com.example.springboot.model.BookingStatus;
 import com.example.springboot.model.House;
 import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
@@ -37,4 +38,6 @@ public interface HouseRepository extends JpaRepository<House,Long> {
 
      @Query("SELECT h FROM House h WHERE h.user = :user AND h.name LIKE CONCAT('%',:name,'%') AND h.houseStatus = :houseStatus")
      List<House> findHousesByUserAndNameAndStatus(User user, String name, HouseStatus houseStatus);
+
+
 }

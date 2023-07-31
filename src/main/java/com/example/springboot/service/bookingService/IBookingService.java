@@ -14,4 +14,5 @@ public interface IBookingService extends IGeneralService<Booking> {
 
     List<Booking> getBookingsByUser(User user);
     void cancelBookingForUser(Long bookingId);
+    List<Booking> getBookingListForCurrentUser();
 }

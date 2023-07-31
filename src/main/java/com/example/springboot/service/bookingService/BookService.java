@@ -112,4 +112,16 @@ public class BookService implements IBookingService {
     public List<Booking> findAllByHouse(House house) {
         return bookingRepository.findByHouse(house);
     }
+
+    @Override
+    public List<Booking> getBookingListForCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> currentUserOptional = userRepository.findByUsername(username);
+
+        if (currentUserOptional.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+        User currentUser = currentUserOptional.get();
+        return bookingRepository.findByUserAndBookingStatus(currentUser, BookingStatus.BOOKING);
+    }
 }

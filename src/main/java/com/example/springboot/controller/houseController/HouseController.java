@@ -118,4 +118,5 @@ public class HouseController {
                                                               @Param("status") HouseStatus status) {
         return new ResponseEntity<>(houseService.findHousesByNameAndStatus(name, status),HttpStatus.OK);
     }
+
 }

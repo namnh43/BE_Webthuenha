@@ -1,6 +1,7 @@
 package com.example.springboot.service.house;
 
 import com.example.springboot.exception.NotFoundException;
+import com.example.springboot.model.BookingStatus;
 import com.example.springboot.model.House;
 import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
@@ -86,5 +87,6 @@ public class HouseService implements IHouseService {
         User currentUser = currentUserOptional.get();
         return houseRepository.findHousesByUserAndNameAndStatus(currentUser, name, status);
     }
+
 
 }

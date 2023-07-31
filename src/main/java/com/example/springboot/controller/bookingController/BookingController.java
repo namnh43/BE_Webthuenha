@@ -3,6 +3,7 @@ package com.example.springboot.controller.bookingController;
 import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.House;
 import com.example.springboot.service.bookingService.IBookingService;
 import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,10 @@ public class BookingController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @GetMapping("list-booking")
+    public ResponseEntity<List<Booking>> getBookingByHouse(){
+        return new ResponseEntity<>(bookingService.getBookingListForCurrentUser(),HttpStatus.OK);
     }
 }

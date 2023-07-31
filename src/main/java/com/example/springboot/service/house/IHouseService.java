@@ -22,4 +22,5 @@ public interface IHouseService extends IGeneralService<House> {
                                       @Param("endDate") Date endDate);
      void updateHouseStatus(Long id, HouseStatus status);
      List<House> findHousesByNameAndStatus(String name, HouseStatus status);
+
 }
