@@ -33,6 +33,7 @@ public class Booking {
     private Integer total;
     private Date createAt;
     private Date updateAt;
+
     @OneToOne
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     private Review review;

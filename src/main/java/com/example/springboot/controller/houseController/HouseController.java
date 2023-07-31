@@ -1,5 +1,6 @@
 package com.example.springboot.controller.houseController;
 
+import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.model.House;
 import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.Image;
@@ -55,14 +56,11 @@ public class HouseController {
         return new ResponseEntity<>(optionalHouse.get(), HttpStatus.OK);
     }
 
-    @PostMapping("/create/{id}")
-    public ResponseEntity<House> createHouse(@PathVariable long id, @RequestBody House house) {
-        Optional<User> optionalUser = userService.findById(id);
-        if (!optionalUser.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PostMapping("")
+    public ResponseEntity<House> createHouse(@RequestBody House house) {
+        var user = userService.getCurrentUser();
         House house1 = houseService.save(house);
-        house1.setUser(optionalUser.get());
+        house1.setUser(user);
         Iterable<Image> images = house.getImages();
         for (Image image : images) {
             image.setHouse(house1);
@@ -71,12 +69,17 @@ public class HouseController {
         return new ResponseEntity<>(houseService.save(house1), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void remove(@PathVariable Long id) {
+        Optional<House> optionalHouse = houseService.findById(id);
+        if (!optionalHouse.isPresent()) {
+            throw new NotFoundException("House not found");
+        }
+        imageService.deleteAllByHouse(optionalHouse.get());
         houseService.remove(id);
     }
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<House> update(@PathVariable Long id, @RequestBody House house) {
         Optional<House> optionalHouse = houseService.findById(id);
         if (!optionalHouse.isPresent()) {

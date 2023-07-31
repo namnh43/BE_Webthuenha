@@ -24,7 +24,6 @@ public interface HouseRepository extends JpaRepository<House,Long> {
              "AND CASE WHEN :totalBathrooms = 0 THEN true ELSE h.total_bathrooms = :totalBathrooms END = true " +
              "AND h.address LIKE %:address% " +
              "AND h.price >= :minPrice AND h.price <= :maxPrice " +
-             "AND h.house_status = 'EMPTY' " +
              "AND NOT EXISTS (SELECT * FROM bookings b WHERE b.house_id = h.id AND ((:startDate BETWEEN b.start_date AND b.end_date) OR (:endDate BETWEEN b.start_date AND b.end_date) OR (b.start_date BETWEEN :startDate AND :endDate)))",
              nativeQuery = true)
      List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") Integer totalBedrooms,
