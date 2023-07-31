@@ -1,7 +1,9 @@
 package com.example.springboot.controller.reviewController;
 
 import com.example.springboot.model.Review;
+import com.example.springboot.model.User;
 import com.example.springboot.service.review.ReviewService;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import java.util.List;
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/bookings/{id}")
     public ResponseEntity<Void> createReviewFromBooking(@PathVariable Long id,
@@ -33,4 +38,6 @@ public class ReviewController {
         List<Review> reviews = reviewService.getReviewByHouseId(id);
         return new ResponseEntity<>(reviews,HttpStatus.OK);
     }
+
+
 }

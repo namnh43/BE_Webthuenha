@@ -3,17 +3,21 @@ package com.example.springboot.service.review;
 import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.House;
 import com.example.springboot.model.Review;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.BookingRepository;
+import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.ReviewRepository;
 import com.example.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService implements IReviewService{
@@ -22,6 +26,9 @@ public class ReviewService implements IReviewService{
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private HouseRepository houseRepository;
 
     @Autowired
     private UserRepository userRepository;
