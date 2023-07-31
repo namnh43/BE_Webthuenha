@@ -76,7 +76,6 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-
     @GetMapping("/list-booking")
     public ResponseEntity<List<Booking>> getBookingsByUser() {
         User user = userService.getCurrentUser();

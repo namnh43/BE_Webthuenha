@@ -27,7 +27,6 @@ public class GoogleOAuth2Service {
     @Autowired
     private JwtService jwtService;
     private static final String CLIENT_ID = "696354615975-8ivuevdnm3gh9anklroh9kq3mfh4nkog.apps.googleusercontent.com";
-    private static int count = 0;
 
     public static void test(String accessToken) {
         try {
@@ -80,7 +79,7 @@ public class GoogleOAuth2Service {
                 Payload payload = idToken.getPayload();
 
                 String email = payload.getEmail();
-                Optional<User> userOptional = userRepository.findByUsername(email);
+                Optional<User> userOptional = userRepository.findByEmail(email);
 
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
@@ -92,12 +91,10 @@ public class GoogleOAuth2Service {
                 String locale = (String) payload.get("locale");
                 String familyName = (String) payload.get("family_name");
                 String givenName = (String) payload.get("given_name");
-                String phoneNumber = "NoInformation" + ++count;
 
                 User newUser = new User();
                 newUser.setUsername(email);
                 newUser.setEmail(email);
-                newUser.setPhoneNumber(phoneNumber);
                 newUser.setProfileImage(pictureUrl);
                 newUser.setFirstName(givenName);
                 newUser.setLastName(familyName);

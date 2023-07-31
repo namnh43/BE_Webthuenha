@@ -19,20 +19,34 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     private Double rating;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+
     private Date createdAt;
     private Date updatedAt;
-        @Enumerated(EnumType.STRING)
-        private ReviewStatus reviewStatus;
+
+    @Enumerated(EnumType.STRING)
+    private ReviewStatus reviewStatus = ReviewStatus.APPROVED;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
     private House house;
 
-
     @PrePersist
     public void setCreatedAt() {
         this.createdAt = new Date(new java.util.Date().getTime());
+    }
+
+    @PreUpdate
+    public void setUpdatedAt() {
+        this.updatedAt = new Date(new java.util.Date().getTime());
     }
 }
