@@ -12,9 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService implements IBookingService {
@@ -111,5 +113,43 @@ public class BookService implements IBookingService {
 
     public List<Booking> findAllByHouse(House house) {
         return bookingRepository.findByHouse(house);
+    }
+
+    public List<Booking> findAllByOwner(User user) {
+        List<House> houseList = (List<House>) houseRepository.findByUser(user);
+        List<Booking> bookingList = new ArrayList<>();
+
+        for (var house: houseList) {
+            List<Booking> bookingInHouse = findAllByHouse(house);
+            bookingList.addAll(bookingInHouse);
+        }
+
+        return bookingList.stream()
+                .sorted((b1, b2) -> b2.getId().compareTo(b1.getId()))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void checkInBooking(Long id) {
+        Optional<Booking> optionalBooking = bookingRepository.findById(id);
+        if (optionalBooking.isPresent()) {
+            Booking booking = optionalBooking.get();
+            booking.setBookingStatus(BookingStatus.CHECKED_IN);
+            bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("Booking not found with id " + id);
+        }
+    }
+    @Override
+    public void checkOutBooking(Long id) {
+        Optional<Booking> optionalBooking = bookingRepository.findById(id);
+        if (optionalBooking.isPresent()) {
+            Booking booking = optionalBooking.get();
+            booking.setBookingStatus(BookingStatus.CHECKED_OUT);
+            bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("Booking not found with id " + id);
+        }
     }
 }

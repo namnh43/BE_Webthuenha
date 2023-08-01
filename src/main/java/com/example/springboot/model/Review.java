@@ -24,7 +24,7 @@ public class Review {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    private Double rating;
+    private Integer rating;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -33,7 +33,7 @@ public class Review {
     private Date updatedAt;
 
     @Enumerated(EnumType.STRING)
-    private ReviewStatus reviewStatus = ReviewStatus.APPROVED;
+    private ReviewStatus reviewStatus;
 
     @JsonIgnore
     @ManyToOne
@@ -43,6 +43,7 @@ public class Review {
     @PrePersist
     public void setCreatedAt() {
         this.createdAt = new Date(new java.util.Date().getTime());
+        this.reviewStatus = ReviewStatus.APPROVED;
     }
 
     @PreUpdate

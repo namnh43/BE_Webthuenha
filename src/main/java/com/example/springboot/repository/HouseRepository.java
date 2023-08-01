@@ -1,7 +1,6 @@
 package com.example.springboot.repository;
 
 import com.example.springboot.model.House;
-import com.example.springboot.model.HouseStatus;
 import com.example.springboot.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface HouseRepository extends JpaRepository<House,Long> {
@@ -19,13 +17,13 @@ public interface HouseRepository extends JpaRepository<House,Long> {
      @Query("SELECT COUNT(h) FROM House h WHERE h.user.id = :userId")
      Long countByUserId(@Param("userId") Long userId);
 
-     @Query(value = "SELECT * FROM houses h WHERE " +
-             "CASE WHEN :totalBedrooms = 0 THEN true ELSE h.total_bedrooms = :totalBedrooms END = true " +
-             "AND CASE WHEN :totalBathrooms = 0 THEN true ELSE h.total_bathrooms = :totalBathrooms END = true " +
+     @Query("SELECT h FROM House h WHERE " +
+             "(:totalBedrooms = 0 OR h.totalBedrooms = :totalBedrooms) " +
+             "AND (:totalBathrooms = 0 OR h.totalBathrooms = :totalBathrooms) " +
              "AND h.address LIKE %:address% " +
              "AND h.price >= :minPrice AND h.price <= :maxPrice " +
-             "AND NOT EXISTS (SELECT * FROM bookings b WHERE b.house_id = h.id AND ((:startDate BETWEEN b.start_date AND b.end_date) OR (:endDate BETWEEN b.start_date AND b.end_date) OR (b.start_date BETWEEN :startDate AND :endDate)))",
-             nativeQuery = true)
+             "AND NOT EXISTS (SELECT 1 FROM Booking b WHERE b.house = h AND " +
+             "((:startDate BETWEEN b.startDate AND b.endDate) OR (:endDate BETWEEN b.startDate AND b.endDate) OR (b.startDate BETWEEN :startDate AND :endDate) OR (b.endDate BETWEEN :startDate AND :endDate)))")
      List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") Integer totalBedrooms,
                                                   @Param("totalBathrooms") Integer totalBathrooms,
                                                   @Param("address") String address,
@@ -33,8 +31,7 @@ public interface HouseRepository extends JpaRepository<House,Long> {
                                                   @Param("maxPrice") Double maxPrice,
                                                   @Param("startDate") Date startDate,
                                                   @Param("endDate") Date endDate);
-     Optional<House> findByName(String name);
 
-     @Query("SELECT h FROM House h WHERE h.user = :user AND h.name LIKE CONCAT('%',:name,'%') AND h.houseStatus = :houseStatus")
-     List<House> findHousesByUserAndNameAndStatus(User user, String name, HouseStatus houseStatus);
+
+
 }
