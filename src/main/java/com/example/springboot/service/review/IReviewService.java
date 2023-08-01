@@ -5,4 +5,5 @@ import com.example.springboot.service.IGeneralService;
 
 public interface IReviewService extends IGeneralService<Review> {
 
+    void hideReview(Long id);
 }
