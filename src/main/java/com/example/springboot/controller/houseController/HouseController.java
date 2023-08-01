@@ -63,14 +63,24 @@ public class HouseController {
         return new ResponseEntity<>(houseService.save(house1), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public void remove(@PathVariable Long id) {
-        Optional<House> optionalHouse = houseService.findById(id);
-        if (!optionalHouse.isPresent()) {
-            throw new NotFoundException("House not found");
+    @PutMapping("/block/{id}")
+    public ResponseEntity<House> block(@PathVariable Long id) {
+        try {
+            houseService.blockHouse(id);
+        }catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        imageService.deleteAllByHouse(optionalHouse.get());
-        houseService.remove(id);
+        return new ResponseEntity<>(houseService.blockHouse(id),HttpStatus.OK);
+    }
+
+    @PutMapping("/un-block/{id}")
+    public ResponseEntity<House> unBlock(@PathVariable Long id) {
+        try {
+            houseService.UnBlockHouse(id);
+        }catch (NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(houseService.UnBlockHouse(id),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
