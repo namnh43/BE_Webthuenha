@@ -141,6 +141,7 @@ public class BookService implements IBookingService {
             throw new RuntimeException("Booking not found with id " + id);
         }
     }
+
     @Override
     public void checkOutBooking(Long id) {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
@@ -151,5 +152,9 @@ public class BookService implements IBookingService {
         } else {
             throw new RuntimeException("Booking not found with id " + id);
         }
+    }
+
+    public List<Booking> getBookingsByHouseId(Long houseId) {
+        return bookingRepository.findByHouseId(houseId);
     }
 }

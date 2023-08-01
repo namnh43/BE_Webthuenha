@@ -89,4 +89,8 @@ public class BookingController {
         bookingService.checkOutBooking(id);
     }
 
+    @GetMapping("/list-booking")
+    public ResponseEntity<List<Booking>> getListByHouse(@PathVariable Long houseId){
+        return new ResponseEntity<>(bookingService.getBookingsByHouseId(houseId),HttpStatus.OK);  
+    }
 }
