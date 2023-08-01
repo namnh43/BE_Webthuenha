@@ -5,11 +5,13 @@ import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
 import com.example.springboot.model.House;
 import com.example.springboot.model.Review;
+import com.example.springboot.model.ReviewStatus;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.BookingRepository;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.ReviewRepository;
 import com.example.springboot.repository.UserRepository;
+import com.example.springboot.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,10 @@ public class ReviewService implements IReviewService{
     @Autowired
     private UserRepository userRepository;
 
-    public void createReviewFromBooking(Long id, Double rating, String content) {
+    @Autowired
+    private UserService userService;
+
+    public void createReviewFromBooking(Long id, Integer rating, String content) {
         // Lấy đối tượng Booking từ cơ sở dữ liệu
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
         if (optionalBooking.isEmpty()) {
@@ -88,7 +93,22 @@ public class ReviewService implements IReviewService{
 
     @Override
     public void remove(Long id) {
+        reviewRepository.deleteById(id);
+    }
 
+    @Override
+    public void hideReview(Long id) {
+        Optional<Review> reviewOptional = reviewRepository.findById(id);
+        if (reviewOptional.isEmpty()) {
+            throw new NotFoundException("Review not found");
+        }
+        var review = reviewOptional.get();
+        var user = userService.getCurrentUser();
+        if (!review.getHouse().getUser().equals(user)) {
+            throw new UnauthorizedException("You are not allowed to hide this review");
+        }
+        review.setReviewStatus(ReviewStatus.REJECTED);
+        reviewRepository.save(review);
     }
 
     @Override

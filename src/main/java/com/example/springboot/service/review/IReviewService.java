@@ -9,4 +9,5 @@ import java.util.List;
 public interface IReviewService extends IGeneralService<Review> {
     List<Review> getReviewByHouseId(Long id);
 
+    void hideReview(Long id);
 }
