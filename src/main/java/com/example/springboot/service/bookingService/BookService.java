@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -119,7 +120,7 @@ public class BookService implements IBookingService {
         List<House> houseList = (List<House>) houseRepository.findByUser(user);
         List<Booking> bookingList = new ArrayList<>();
 
-        for (var house: houseList) {
+        for (var house : houseList) {
             List<Booking> bookingInHouse = findAllByHouse(house);
             bookingList.addAll(bookingInHouse);
         }
@@ -148,13 +149,14 @@ public class BookService implements IBookingService {
         if (optionalBooking.isPresent()) {
             Booking booking = optionalBooking.get();
             booking.setBookingStatus(BookingStatus.CHECKED_OUT);
+            booking.setEndDate(new Date(new java.util.Date().getTime())); // Cập nhật ngày endDate thành thời gian hiện tại
             bookingRepository.save(booking);
         } else {
             throw new RuntimeException("Booking not found with id " + id);
         }
     }
 
-    public List<Booking> getBookingsByHouseId(Long houseId) {
-        return bookingRepository.findByHouseId(houseId);
+    public List<BookingDateRange> getBookingsByHouseId(Long houseId) {
+        return bookingRepository.findBookingDateRangesByHouseId(houseId);
     }
 }
