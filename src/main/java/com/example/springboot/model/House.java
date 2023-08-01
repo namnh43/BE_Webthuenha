@@ -61,6 +61,8 @@ public class House {
     @OneToMany(mappedBy = "house")
     private List<Review> reviews;
 
+    private boolean isBlocked = false;
+
     @PrePersist
     public void setCreatedAt() {
         this.createdAt = new Date(new java.util.Date().getTime());
