@@ -43,7 +43,7 @@ public class House {
 
     private Date createdAt;
 
-    @Formula("(SELECT AVG(r.rating) FROM reviews r WHERE r.house_id = id)")
+    @Formula("(SELECT ROUND(AVG(r.rating), 1) FROM reviews r WHERE r.house_id = id)")
     private Double ratingScore;
 
     @Formula("(SELECT COUNT(*) FROM reviews r WHERE r.house_id = id)")
