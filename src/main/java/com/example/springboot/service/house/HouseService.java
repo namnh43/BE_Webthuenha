@@ -7,6 +7,7 @@ import com.example.springboot.model.User;
 import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.repository.UserRepository;
 import com.example.springboot.service.user.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,4 +69,17 @@ public class HouseService implements IHouseService {
         return houseRepository.findBySearchCriteriaAndTimeRange(totalBedrooms,totalBathrooms,address,minPrice,maxPrice,startDate,endDate);
     }
 
+    @Transactional
+    @Override
+    public House blockHouse(Long houseId) {
+        houseRepository.blockHouse(houseId);
+        return houseRepository.findById(houseId).get();
+    }
+
+    @Transactional
+    @Override
+    public House UnBlockHouse(Long houseId) {
+        houseRepository.UnBlockHouse(houseId);
+        return houseRepository.findById(houseId).get();
+    }
 }
