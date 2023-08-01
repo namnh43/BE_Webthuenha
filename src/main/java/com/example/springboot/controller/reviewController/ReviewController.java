@@ -25,15 +25,6 @@ public class ReviewController {
     private UserService userService;
 
     @PostMapping("/bookings/{id}")
-    public ResponseEntity<Void> createReviewFromBooking(@PathVariable Long id,
-                                                        @Param("rating") Double rating,
-                                                        @Param("content") String content) {
-        try {
-            reviewService.createReviewFromBooking(id, rating, content);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
     public void createReviewFromBooking(@PathVariable Long id, @RequestBody Review reviewDto) {
         Integer rating = reviewDto.getRating();
         String content = reviewDto.getContent();
