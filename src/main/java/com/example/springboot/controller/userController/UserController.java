@@ -2,6 +2,7 @@ package com.example.springboot.controller.userController;
 
 import com.example.springboot.dto.request.ChangePasswordRequest;
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 
@@ -81,4 +82,15 @@ public class UserController {
         return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUser() {
+        if (userService.getCurrentUser().getRole() == Role.ADMIN) {
+            try {
+                return new ResponseEntity<>((List<User>) userService.findAll(), HttpStatus.OK);
+            } catch (NullPointerException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
 }
