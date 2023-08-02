@@ -3,6 +3,7 @@ package com.example.springboot.controller.bookingController;
 import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.exception.UnauthorizedException;
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.BookingDateRange;
 import com.example.springboot.model.House;
 import com.example.springboot.model.User;
 import com.example.springboot.service.bookingService.IBookingService;
@@ -89,8 +90,8 @@ public class BookingController {
         bookingService.checkOutBooking(id);
     }
 
-    @GetMapping("/list-booking")
-    public ResponseEntity<List<Booking>> getListByHouse(@PathVariable Long houseId){
-        return new ResponseEntity<>(bookingService.getBookingsByHouseId(houseId),HttpStatus.OK);  
+    @GetMapping("/house/{houseId}")
+    public List<BookingDateRange> getBookingsByHouseId(@PathVariable Long houseId) {
+        return bookingService.getBookingsByHouseId(houseId);
     }
 }
