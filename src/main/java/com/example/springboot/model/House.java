@@ -2,10 +2,7 @@ package com.example.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Formula;
 
 
@@ -69,4 +66,5 @@ public class House {
         this.createdAt = new Date(new java.util.Date().getTime());
         this.featuredImage = "https://a0.muscache.com/im/pictures/miso/Hosting-813137457313942137/original/34eaa638-9027-4e9a-9e91-239db6f2e844.jpeg?im_w=720";
     }
+
 }
