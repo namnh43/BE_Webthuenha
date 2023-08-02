@@ -20,5 +20,7 @@ public interface IHouseService extends IGeneralService<House> {
                                       @Param("startDate") Date startDate,
                                       @Param("endDate") Date endDate);
 
+     House blockHouse(Long houseId);
 
+     House UnBlockHouse(Long houseId);
 }

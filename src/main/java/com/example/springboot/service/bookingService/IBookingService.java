@@ -1,6 +1,7 @@
 package com.example.springboot.service.bookingService;
 
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.BookingDateRange;
 import com.example.springboot.model.User;
 import com.example.springboot.service.IGeneralService;
 
@@ -16,5 +17,8 @@ public interface IBookingService extends IGeneralService<Booking> {
     void cancelBookingForUser(Long bookingId);
     void checkInBooking(Long id);
     void checkOutBooking(Long id);
+
     List<Booking> findAllByOwner(User user);
+
+    List<BookingDateRange> getBookingsByHouseId(Long houseId);
 }

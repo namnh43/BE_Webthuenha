@@ -1,9 +1,6 @@
 package com.example.springboot.repository;
 
-import com.example.springboot.model.Booking;
-import com.example.springboot.model.BookingStatus;
-import com.example.springboot.model.House;
-import com.example.springboot.model.User;
+import com.example.springboot.model.*;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,5 +18,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByHouse(House house);
 
-
+    @Query("SELECT new com.example.springboot.model.BookingDateRange(b.startDate, b.endDate) FROM Booking b WHERE b.house.id = :houseId AND b.endDate >= CURRENT_DATE")
+    List<BookingDateRange> findBookingDateRangesByHouseId(@Param("houseId") Long houseId);
 }
