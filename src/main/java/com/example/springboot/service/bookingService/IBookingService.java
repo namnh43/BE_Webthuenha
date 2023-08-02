@@ -5,13 +5,11 @@ import com.example.springboot.model.BookingDateRange;
 import com.example.springboot.model.User;
 import com.example.springboot.service.IGeneralService;
 
-import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface IBookingService extends IGeneralService<Booking> {
 
-    boolean createBooking(Booking booking);
+    Booking createBooking(Booking booking);
 
     List<Booking> getBookingsByUser(User user);
     void cancelBookingForUser(Long bookingId);

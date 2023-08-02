@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +53,7 @@ public class BookService implements IBookingService {
     }
 
     @Override
-    public boolean createBooking(Booking booking) {
+    public Booking createBooking(Booking booking) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> currentUserOptional = userRepository.findByUsername(username);
 
@@ -71,12 +70,11 @@ public class BookService implements IBookingService {
                     (inputBookingStartDate.compareTo(bokkingElementStartDate) >= 0 && inputBookingStartDate.compareTo(bookingElementEndDate) <= 0)
                             || (inputbookingEndDate.compareTo(bokkingElementStartDate) >= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) <= 0)
                             || (inputBookingStartDate.compareTo(bokkingElementStartDate) <= 0 && inputbookingEndDate.compareTo(bookingElementEndDate) >= 0)
-            ) return false;
+            ) return null;
         }
 
         booking.setUser(currentUserOptional.get());
-        bookingRepository.save(booking);
-        return true;
+        return bookingRepository.save(booking);
     }
 
     @Override
