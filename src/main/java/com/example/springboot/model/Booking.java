@@ -1,5 +1,6 @@
 package com.example.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-import static com.example.springboot.model.BookingStatus.WAITING_FOR_CHECKIN;
+import static com.example.springboot.model.BookingStatus.BOOKING;
 
 @Data
 @Builder
@@ -33,12 +34,13 @@ public class Booking {
     private Integer total;
     private Date createAt;
     private Date updateAt;
+
     @OneToOne
     @JoinColumn(name = "review_id", referencedColumnName = "id")
     private Review review;
 
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus = WAITING_FOR_CHECKIN;
+    private BookingStatus bookingStatus = BOOKING;
 
     @PrePersist
     public void setCreatedAt() {

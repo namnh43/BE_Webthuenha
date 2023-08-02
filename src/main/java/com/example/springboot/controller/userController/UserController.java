@@ -3,6 +3,7 @@ package com.example.springboot.controller.userController;
 
 import com.example.springboot.dto.request.ChangePasswordRequest;
 import com.example.springboot.model.Booking;
+import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
 import com.example.springboot.repository.UserRepository;
 
@@ -56,18 +57,12 @@ public class UserController {
     //@Bean PasswordEncoder sẽ bị gọi thành vòng lặp nếu đặt trong userService nên tạm thời viết luôn ở controller
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-
-        User user = userOptional.get();
+        User user = userService.getCurrentUser();
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid current password");
+            return ResponseEntity.status(HttpStatus.OK).body("Invalid current password");
 
         if (passwordEncoder.matches(request.getNewPassword(), user.getPassword()))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password must be different from the current password");
+            return ResponseEntity.status(HttpStatus.OK).body("New password must be different from the current password");
 
         String newPasswordEncoded = passwordEncoder.encode(request.getNewPassword());
         user.setPassword(newPasswordEncoded);
@@ -76,19 +71,27 @@ public class UserController {
         return ResponseEntity.ok("Password changed successfully");
     }
 
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<User> updateHostById(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userService.updateHostById(id, user), HttpStatus.OK);
+    @PutMapping("/current")
+    public ResponseEntity<User> updateCurrentUser(@RequestBody User updatedUser) {
+        User currentUser = userService.updateUser(updatedUser);
+        return ResponseEntity.ok(currentUser);
     }
 
     @GetMapping("/list-booking")
     public ResponseEntity<List<Booking>> getBookingsByUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
-        if (userOptional.isEmpty())
-             ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        User user = userOptional.get();
+        User user = userService.getCurrentUser();
         return new ResponseEntity<>(bookingService.getBookingsByUser(user),HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUser() {
+        if (userService.getCurrentUser().getRole() == Role.ADMIN) {
+            try {
+                return new ResponseEntity<>((List<User>) userService.findAll(), HttpStatus.OK);
+            } catch (NullPointerException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

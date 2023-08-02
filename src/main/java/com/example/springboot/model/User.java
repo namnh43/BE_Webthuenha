@@ -2,12 +2,10 @@ package com.example.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +38,6 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true, nullable = false)
     private String phoneNumber;
 
     private String address;
@@ -87,7 +84,7 @@ public class User implements UserDetails {
     }
 
     @PrePersist
-    public void setCreatedAt() {
+    public void setCreateAt() {
             this.createAt = new Date(new java.util.Date().getTime());
     }
 
