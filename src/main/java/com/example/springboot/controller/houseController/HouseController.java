@@ -42,6 +42,11 @@ public class HouseController {
         return new ResponseEntity<>(houseService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/latest")
+    public ResponseEntity<Iterable<House>> getLatestHouses() {
+        return new ResponseEntity<>(houseService.findAllByOrderByIdDesc(), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<House> findById(@PathVariable Long id) {
         Optional<House> optionalHouse = houseService.findById(id);

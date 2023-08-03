@@ -23,4 +23,6 @@ public interface IHouseService extends IGeneralService<House> {
      House blockHouse(Long houseId);
 
      House UnBlockHouse(Long houseId);
+
+     List<House> findAllByOrderByIdDesc();
 }

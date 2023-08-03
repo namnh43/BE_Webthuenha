@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                         authorize -> authorize
                                 .requestMatchers("/jwt/**").permitAll()
                                 .requestMatchers("/house").permitAll()
+                                .requestMatchers("/house/latest").permitAll()
                                 .requestMatchers("/house/{id}").permitAll()
                                 .requestMatchers("/booking/house/{id}").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
