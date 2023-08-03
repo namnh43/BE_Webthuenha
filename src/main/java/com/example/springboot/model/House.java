@@ -2,6 +2,10 @@ package com.example.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.Formula;
 
@@ -20,6 +24,7 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
     private Integer totalBedrooms;
@@ -28,6 +33,8 @@ public class House {
 
     private String address;
 
+    @Min(1)
+    @Max(1000000000)
     private Double price;
 
     @Column(columnDefinition = "TEXT")

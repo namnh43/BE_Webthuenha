@@ -7,6 +7,7 @@ import com.example.springboot.model.User;
 import com.example.springboot.service.house.IHouseService;
 import com.example.springboot.service.img.IImageService;
 import com.example.springboot.service.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class HouseController {
     }
 
     @PostMapping("")
-    public ResponseEntity<House> createHouse(@RequestBody House house) {
+    public ResponseEntity<House> createHouse(@Valid @RequestBody House house) {
         var user = userService.getCurrentUser();
         House house1 = houseService.save(house);
         house1.setUser(user);
