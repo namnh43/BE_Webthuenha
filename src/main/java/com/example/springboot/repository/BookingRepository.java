@@ -18,6 +18,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByHouse(House house);
 
-    @Query("SELECT new com.example.springboot.model.BookingDateRange(b.startDate, b.endDate) FROM Booking b WHERE b.house.id = :houseId AND b.endDate >= CURRENT_DATE")
+    @Query("SELECT new com.example.springboot.model.BookingDateRange(b.startDate, b.endDate) FROM Booking b WHERE b.house.id = :houseId AND b.bookingStatus != 'CANCELLED' AND b.endDate >= CURRENT_DATE")
     List<BookingDateRange> findBookingDateRangesByHouseId(@Param("houseId") Long houseId);
 }
