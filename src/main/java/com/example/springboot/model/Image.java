@@ -19,6 +19,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fileUrl;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")

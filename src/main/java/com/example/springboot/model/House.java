@@ -2,10 +2,11 @@ package com.example.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.Formula;
 
 
@@ -23,6 +24,7 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
     private Integer totalBedrooms;
@@ -31,6 +33,8 @@ public class House {
 
     private String address;
 
+    @Min(1)
+    @Max(1000000000)
     private Double price;
 
     @Column(columnDefinition = "TEXT")
@@ -69,4 +73,5 @@ public class House {
         this.createdAt = new Date(new java.util.Date().getTime());
         this.featuredImage = "https://a0.muscache.com/im/pictures/miso/Hosting-813137457313942137/original/34eaa638-9027-4e9a-9e91-239db6f2e844.jpeg?im_w=720";
     }
+
 }
