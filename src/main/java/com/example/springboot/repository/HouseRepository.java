@@ -40,4 +40,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     @Modifying
     @Query("UPDATE House h SET h.isBlocked = false WHERE h.id = :id")
     void UnBlockHouse(Long id);
+
+    List<House> findAllByOrderByIdDesc();
 }

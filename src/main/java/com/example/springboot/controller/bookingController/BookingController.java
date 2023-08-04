@@ -32,9 +32,9 @@ public class BookingController {
 
     @PostMapping("/create")
     public ResponseEntity<Booking> create(@RequestBody Booking booking) {
-        boolean isSuccessfullyCreated = bookingService.createBooking(booking);
+        Booking isSuccessfullyCreated = bookingService.createBooking(booking);
         System.out.println(booking);
-        if (isSuccessfullyCreated) return new ResponseEntity<>(HttpStatus.OK);
+        if (isSuccessfullyCreated != null) return new ResponseEntity<>(isSuccessfullyCreated, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

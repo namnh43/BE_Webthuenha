@@ -82,4 +82,9 @@ public class HouseService implements IHouseService {
         houseRepository.UnBlockHouse(houseId);
         return houseRepository.findById(houseId).get();
     }
+
+    @Override
+    public List<House> findAllByOrderByIdDesc() {
+        return houseRepository.findAllByOrderByIdDesc();
+    }
 }
