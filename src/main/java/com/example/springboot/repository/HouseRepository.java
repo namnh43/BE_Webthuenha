@@ -19,12 +19,17 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     Long countByUserId(@Param("userId") Long userId);
 
     @Query("SELECT h FROM House h WHERE " +
-            "(:totalBedrooms = 0 OR h.totalBedrooms = :totalBedrooms) " +
+            "h.isBlocked = false AND h.user.isBlocked = false " +
+            "AND (:totalBedrooms = 0 OR h.totalBedrooms = :totalBedrooms) " +
             "AND (:totalBathrooms = 0 OR h.totalBathrooms = :totalBathrooms) " +
-            "AND h.address LIKE %:address% " +
+            "AND (REPLACE(h.address, ' ', '') LIKE CONCAT('%', REPLACE(:address, ' ', ''), '%')) " +
             "AND h.price >= :minPrice AND h.price <= :maxPrice " +
-            "AND NOT EXISTS (SELECT 1 FROM Booking b WHERE b.house = h AND " +
-            "((:startDate BETWEEN b.startDate AND b.endDate) OR (:endDate BETWEEN b.startDate AND b.endDate) OR (b.startDate BETWEEN :startDate AND :endDate) OR (b.endDate BETWEEN :startDate AND :endDate)))")
+            "AND NOT EXISTS (SELECT 1 FROM Booking b WHERE b.house = h AND b.bookingStatus != 'CANCELLED' AND " +
+            "(b.endDate < CURRENT_DATE OR " +
+            "(:startDate BETWEEN b.startDate AND b.endDate) OR " +
+            "(:endDate BETWEEN b.startDate AND b.endDate) OR " +
+            "(b.startDate BETWEEN :startDate AND :endDate) OR " +
+            "(b.endDate BETWEEN :startDate AND :endDate)))")
     List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") Integer totalBedrooms,
                                                  @Param("totalBathrooms") Integer totalBathrooms,
                                                  @Param("address") String address,
@@ -41,5 +46,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     @Query("UPDATE House h SET h.isBlocked = false WHERE h.id = :id")
     void UnBlockHouse(Long id);
 
+    @Query("SELECT h FROM House h WHERE h.isBlocked = false AND h.user.isBlocked = false")
     List<House> findAllByOrderByIdDesc();
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,6 +55,12 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Formula("(SELECT COUNT(*) FROM houses h WHERE h.user_id = id)")
+    private Integer numberOfHouse;
+
+    @Formula("(SELECT SUM(b.total) FROM houses h JOIN bookings b ON h.id = b.house_id WHERE h.user_id = id AND b.booking_status = 'CHECKED_OUT')")
+    private Double earnedMoney;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
