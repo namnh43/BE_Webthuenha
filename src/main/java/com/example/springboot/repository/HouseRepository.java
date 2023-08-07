@@ -19,7 +19,8 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     Long countByUserId(@Param("userId") Long userId);
 
     @Query("SELECT h FROM House h WHERE " +
-            "(:totalBedrooms = 0 OR h.totalBedrooms = :totalBedrooms) " +
+            "h.isBlocked = false AND h.user.isBlocked = false " +
+            "AND (:totalBedrooms = 0 OR h.totalBedrooms = :totalBedrooms) " +
             "AND (:totalBathrooms = 0 OR h.totalBathrooms = :totalBathrooms) " +
             "AND (REPLACE(h.address, ' ', '') LIKE CONCAT('%', REPLACE(:address, ' ', ''), '%')) " +
             "AND h.price >= :minPrice AND h.price <= :maxPrice " +
@@ -45,5 +46,6 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     @Query("UPDATE House h SET h.isBlocked = false WHERE h.id = :id")
     void UnBlockHouse(Long id);
 
+    @Query("SELECT h FROM House h WHERE h.isBlocked = false AND h.user.isBlocked = false")
     List<House> findAllByOrderByIdDesc();
 }
