@@ -2,9 +2,12 @@ package com.example.springboot.service.websocket;
 
 import com.example.springboot.model.Booking;
 import com.example.springboot.model.BookingNotify;
+import com.example.springboot.model.User;
 import com.example.springboot.repository.BookingNotifyRepository;
 import com.example.springboot.repository.BookingRepository;
+import com.example.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +21,14 @@ public class BookingNotifyService implements IBookingNotifyService{
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public Iterable<BookingNotify> findAll() {
-        return bookingNotifyRepository.findAll();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> currentUserOptional = userRepository.findByUsername(username);
+        return bookingNotifyRepository.findByTargetUserId(currentUserOptional.get().getId());
     }
 
     @Override

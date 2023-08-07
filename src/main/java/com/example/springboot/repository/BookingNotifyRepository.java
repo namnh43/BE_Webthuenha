@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface BookingNotifyRepository extends JpaRepository<BookingNotify, Long> {
     List<BookingNotify> findByBooking(Booking booking);
+
+    List<BookingNotify> findByTargetUserId(Long id);
 }

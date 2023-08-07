@@ -24,5 +24,12 @@ public class BookingNotify {
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
 
+    @ManyToOne
+    @JoinColumn(name = "source_id", referencedColumnName = "id")
+    private User sourceUser;
+
+    @ManyToOne
+    @JoinColumn(name = "target_id", referencedColumnName = "id")
+    private User targetUser;
 
 }
