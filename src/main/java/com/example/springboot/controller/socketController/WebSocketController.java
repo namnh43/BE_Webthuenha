@@ -39,14 +39,12 @@ public class WebSocketController {
     @Autowired
     private BookingNotifyService bookingNotifyService;
 
-    @MessageMapping("/notify")
+    @MessageMapping("/notify/booking")
     public BookingNotify NotifyBooking(BookingNotify notify) {
-        System.out.println("Go to websocket message" + notify.toString());
         //Get booking_id
         Long booking_id = notify.getBooking().getId();
         Optional<Booking> booking = bookService.findById(booking_id);
         if (booking.isPresent()) {
-            System.out.println("go here");
             //Get user & host
             User requestUser = booking.get().getUser();
             notify.setSourceUser(requestUser);
@@ -54,13 +52,36 @@ public class WebSocketController {
             //Get user from house object
             User host = house.getUser();
             notify.setTargetUser(host);
-            System.out.println("send to user id "+host.getId().toString());
+            String notifyMessage = requestUser.getFirstName() + " is booking " + house.getName();
+            notify.setMessage(notifyMessage);
+            System.out.println("send to user id "+host.getId().toString() + "with message" + notifyMessage);
 
             simpMessagingTemplate.convertAndSendToUser(host.getId().toString(),"/booking",notify);
         }
         return bookingNotifyService.save(notify);
     }
-    @GetMapping("/notify_booking")
+    @MessageMapping("/notify/cancelbooking")
+    public BookingNotify NotifyCancelBooking(BookingNotify notify) {
+        //Get booking_id
+        Long booking_id = notify.getBooking().getId();
+        Optional<Booking> booking = bookService.findById(booking_id);
+        if (booking.isPresent()) {
+            //Get user & host
+            User requestUser = booking.get().getUser();
+            notify.setSourceUser(requestUser);
+            House house = booking.get().getHouse();
+            //Get user from house object
+            User host = house.getUser();
+            notify.setTargetUser(host);
+            String notifyMessage = requestUser.getFirstName() + " canceled " + house.getName();
+            notify.setMessage(notifyMessage);
+            System.out.println("send to user id "+host.getId().toString() + "with message" + notifyMessage);
+
+            simpMessagingTemplate.convertAndSendToUser(host.getId().toString(),"/booking",notify);
+        }
+        return bookingNotifyService.save(notify);
+    }
+    @GetMapping("/notify")
     public ResponseEntity<List<BookingNotify>> getAllNotify() {
         System.out.println("Go to get mapping request");
         return new ResponseEntity<>((List<BookingNotify>)bookingNotifyService.findAll(), HttpStatus.OK);

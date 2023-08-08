@@ -27,13 +27,12 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/jwt/**").permitAll()
                                 .requestMatchers("/house").permitAll()
                                 .requestMatchers("/house/latest").permitAll()
                                 .requestMatchers("/house/{id}").permitAll()
-                                .requestMatchers("/webthuenha").permitAll()
                                 .requestMatchers("/booking/house/{id}").permitAll()
+                                .requestMatchers("/webthuenha").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
