@@ -122,16 +122,6 @@ public class HouseController {
 
     @GetMapping("/{id}/related")
     public List<House> getRelatedHouses(@PathVariable Long id) {
-        Long userId = getUserIdFromHouseId(id);
-        List<House> relatedHouses = houseService.getRelatedHouses(userId, id);
-        return relatedHouses.subList(0, Math.min(relatedHouses.size(), 4));
-    }
-
-    private Long getUserIdFromHouseId(Long houseId) {
-        Optional<House> house = houseRepository.findById(houseId);
-        if (house != null) {
-            return house.get().getUser().getId();
-        }
-        return null; // Hoặc bạn có thể ném một Exception nếu không tìm thấy houseId
+        return houseService.getRelatedHouses(id);
     }
 }

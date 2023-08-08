@@ -49,6 +49,9 @@ public interface HouseRepository extends JpaRepository<House, Long> {
     @Query("SELECT h FROM House h WHERE h.isBlocked = false AND h.user.isBlocked = false")
     List<House> findAllByOrderByIdDesc();
 
-    @Query("SELECT h FROM House h WHERE h.user.id = :userId AND h.id != :houseId")
-    List<House> findRelatedHouses(@Param("userId") Long userId, @Param("houseId") Long houseId);
+    @Query("SELECT h FROM House h WHERE h.user = :user AND h.id <> :houseId")
+    List<House> findRelatedHousesByUser(User user, Long houseId);
+
+    @Query("SELECT h FROM House h WHERE h.price BETWEEN :minPrice AND :maxPrice AND h.user <> :user AND h.id <> :houseId")
+    List<House> findAdditionalHousesByPriceRange(Double minPrice, Double maxPrice, User user, Long houseId);
 }

@@ -26,5 +26,5 @@ public interface IHouseService extends IGeneralService<House> {
 
     List<House> findAllByOrderByIdDesc();
 
-    List<House> getRelatedHouses(Long userId, Long houseId);
+    List<House> getRelatedHouses(Long houseId);
 }
