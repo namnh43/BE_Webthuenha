@@ -36,7 +36,7 @@ public class WebSocketController {
     @Autowired
     private BookingNotifyService bookingNotifyService;
 
-    @MessageMapping("/notify/booking")
+    @MessageMapping("/booking")
     public BookingNotify NotifyBooking(BookingNotify notify) {
         //Get booking_id
         Long booking_id = notify.getBooking().getId();
@@ -57,7 +57,7 @@ public class WebSocketController {
         }
         return bookingNotifyService.save(notify);
     }
-    @MessageMapping("/notify/cancelbooking")
+    @MessageMapping("/cancelbooking")
     public BookingNotify NotifyCancelBooking(BookingNotify notify) {
         //Get booking_id
         Long booking_id = notify.getBooking().getId();
