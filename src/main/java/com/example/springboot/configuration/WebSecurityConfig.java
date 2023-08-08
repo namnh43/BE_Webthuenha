@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/house/{id}").permitAll()
                                 .requestMatchers("/booking/house/{id}").permitAll()
                                 .requestMatchers("/house/{id}/related").permitAll()
+                                .requestMatchers("/webthuenha").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
