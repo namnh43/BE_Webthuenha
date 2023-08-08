@@ -87,4 +87,5 @@ public class HouseService implements IHouseService {
     public List<House> findAllByOrderByIdDesc() {
         return houseRepository.findAllByOrderByIdDesc();
     }
+
 }
