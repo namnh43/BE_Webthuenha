@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +81,16 @@ public class WebSocketController {
     @GetMapping("/notify")
     public ResponseEntity<List<BookingNotify>> getAllNotify() {
         System.out.println("Go to get mapping request");
+        return new ResponseEntity<>((List<BookingNotify>)bookingNotifyService.findAll(), HttpStatus.OK);
+    }
+    @PutMapping("/notify")
+    public ResponseEntity<List<BookingNotify>> markReadNotify() {
+        List<BookingNotify> unRead = bookingNotifyService.getUnreadNotify();
+        System.out.println("update list read");
+        for (var notify: unRead) {
+            notify.setRead(true);
+            bookingNotifyService.save(notify);
+        }
         return new ResponseEntity<>((List<BookingNotify>)bookingNotifyService.findAll(), HttpStatus.OK);
     }
 }

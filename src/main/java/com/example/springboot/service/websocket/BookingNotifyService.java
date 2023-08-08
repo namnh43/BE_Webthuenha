@@ -57,4 +57,9 @@ public class BookingNotifyService implements IBookingNotifyService{
     public List<BookingNotify> getBookingNotifyByBooking(Booking booking) {
         return null;
     }
+
+    @Override
+    public List<BookingNotify> getUnreadNotify() {
+        return bookingNotifyRepository.findAllNotiUnread();
+    }
 }
