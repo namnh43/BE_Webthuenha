@@ -88,4 +88,8 @@ public class HouseService implements IHouseService {
         return houseRepository.findAllByOrderByIdDesc();
     }
 
+    @Override
+    public List<House> getRelatedHouses(Long userId, Long houseId) {
+        return houseRepository.findRelatedHouses(userId, houseId);
+    }
 }
