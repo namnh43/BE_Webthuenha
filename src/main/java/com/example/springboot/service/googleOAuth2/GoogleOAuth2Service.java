@@ -83,6 +83,9 @@ public class GoogleOAuth2Service {
 
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
+                    if (user.isBlocked()) {
+                        return null;
+                    }
                     var response = jwtService.responseJWT(user);
                     return response;
                 }
