@@ -4,6 +4,7 @@ import com.example.springboot.exception.NotFoundException;
 import com.example.springboot.model.House;
 import com.example.springboot.model.Image;
 import com.example.springboot.model.User;
+import com.example.springboot.repository.HouseRepository;
 import com.example.springboot.service.house.IHouseService;
 import com.example.springboot.service.img.IImageService;
 import com.example.springboot.service.user.UserService;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +29,8 @@ public class HouseController {
     public UserService userService;
     @Autowired
     public IImageService imageService;
+    @Autowired
+    public HouseRepository houseRepository;
 
     @GetMapping("/host/{id}")
     public ResponseEntity<Iterable<House>> listHouseByUser(@PathVariable long id) {
@@ -117,4 +121,18 @@ public class HouseController {
         return new ResponseEntity<>(houseService.findBySearchCriteriaAndTimeRange(totalBedrooms, totalBathrooms, address, minPrice, maxPrice,startDate,endDate), HttpStatus.OK);
     }
 
+    @GetMapping("related/{houseId}")
+    public List<House> getRelatedHouses(@PathVariable Long houseId) {
+        Long userId = getUserIdFromHouseId(houseId);
+        List<House> relatedHouses = houseService.getRelatedHouses(userId, houseId);
+        return relatedHouses.subList(0, Math.min(relatedHouses.size(), 4));
+    }
+
+    private Long getUserIdFromHouseId(Long houseId) {
+        Optional<House> house = houseRepository.findById(houseId);
+        if (house != null) {
+            return house.get().getUser().getId();
+        }
+        return null; // Hoặc bạn có thể ném một Exception nếu không tìm thấy houseId
+    }
 }

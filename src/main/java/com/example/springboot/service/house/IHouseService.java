@@ -10,19 +10,23 @@ import java.util.List;
 
 public interface IHouseService extends IGeneralService<House> {
 
-     Iterable<House> findByUser(User user);
-     Long countHouseByUserId(Long userId);
-     List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") int totalBedrooms,
-                                      @Param("totalBathrooms") int totalBathrooms,
-                                      @Param("address") String address,
-                                      @Param("minPrice") double minPrice,
-                                      @Param("maxPrice") double maxPrice,
-                                      @Param("startDate") Date startDate,
-                                      @Param("endDate") Date endDate);
+    Iterable<House> findByUser(User user);
 
-     House blockHouse(Long houseId);
+    Long countHouseByUserId(Long userId);
 
-     House UnBlockHouse(Long houseId);
+    List<House> findBySearchCriteriaAndTimeRange(@Param("totalBedrooms") int totalBedrooms,
+                                                 @Param("totalBathrooms") int totalBathrooms,
+                                                 @Param("address") String address,
+                                                 @Param("minPrice") double minPrice,
+                                                 @Param("maxPrice") double maxPrice,
+                                                 @Param("startDate") Date startDate,
+                                                 @Param("endDate") Date endDate);
 
-     List<House> findAllByOrderByIdDesc();
+    House blockHouse(Long houseId);
+
+    House UnBlockHouse(Long houseId);
+
+    List<House> findAllByOrderByIdDesc();
+
+    List<House> getRelatedHouses(Long userId, Long houseId);
 }

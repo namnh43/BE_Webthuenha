@@ -87,4 +87,9 @@ public class HouseService implements IHouseService {
     public List<House> findAllByOrderByIdDesc() {
         return houseRepository.findAllByOrderByIdDesc();
     }
+
+    @Override
+    public List<House> getRelatedHouses(Long userId, Long houseId) {
+        return houseRepository.findRelatedHouses(userId, houseId);
+    }
 }
