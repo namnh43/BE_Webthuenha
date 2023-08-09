@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +87,41 @@ public class HouseService implements IHouseService {
     @Override
     public List<House> findAllByOrderByIdDesc() {
         return houseRepository.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public List<House> getRelatedHouses(Long houseId) {
+        House selectedHouse = houseRepository.findById(houseId).orElse(null);
+        if (selectedHouse == null) {
+            return null; // Xử lý logic nếu không tìm thấy căn nhà với ID đã cho
+        }
+
+        User user = selectedHouse.getUser();
+        if (user == null) {
+            return null; // Xử lý logic nếu người dùng không được liên kết với căn nhà
+        }
+
+        List<House> relatedHouses = houseRepository.findRelatedHousesByUser(user, houseId);
+        int remainingCount = 4 - relatedHouses.size();
+
+        if (remainingCount <= 0) {
+            return relatedHouses.subList(0, 4); // Trả về 4 căn nhà liên quan nếu đã đủ 4 căn nhà
+        }
+
+        Double minPrice = selectedHouse.getPrice() - 50000; // Giả sử khoảng giá thấp hơn
+        Double maxPrice = selectedHouse.getPrice() + 50000; // Giả sử khoảng giá cao hơn
+        List<House> additionalHouses = houseRepository.findAdditionalHousesByPriceRange(minPrice, maxPrice, user, houseId);
+        List<House> uniqueHouses = new ArrayList<>();
+
+        for (House house : additionalHouses) {
+            uniqueHouses.add(house);
+            remainingCount--;
+            if (remainingCount == 0) {
+                break;
+            }
+        }
+
+        relatedHouses.addAll(uniqueHouses);
+        return relatedHouses;
     }
 }

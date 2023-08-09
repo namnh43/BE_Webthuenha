@@ -9,4 +9,6 @@ import java.util.List;
 public interface IBookingNotifyService extends IGeneralService<BookingNotify> {
     BookingNotify createBookingNotify(BookingNotify notify);
     List<BookingNotify> getBookingNotifyByBooking(Booking booking);
+
+    List<BookingNotify> getUnreadNotify();
 }
